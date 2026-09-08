@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    REF: user story 13
+        Delivery verification mail template -->
+    <record id="sale_order_template_delivery_verification" model="mail.template">
+        <field name="name">Delivery Verification</field>
+        <field name="email_from">{{ (object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}
+        </field>
+        <field name="subject">Delivery Verification - {{ object.name }}</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="description">Used by when delivery verification on sale order thorough website</field>
+        <field name="body_html" type="html">
+            <t t-set="customer_name" t-value="object.partner_id.name"/>
+            <t t-set="order_ref" t-value="object.name"/>
+            <t t-set="payment_method" t-value="ctx.get('provider', '')"/>
+            <t t-set="total_amount" t-value="object.amount_total"/>
+            <div>
+                <p>
+                    Hello,
+                </p>
+
+                <p>
+                    <strong>Customer Name:</strong>
+                    <t t-out="customer_name"/>
+                </p>
+                <p>
+                    <strong>Order Reference:</strong>
+                    <t t-out="order_ref"/>
+                </p>
+                <p>
+                    <strong>Payment Method:</strong>
+                    <t t-out="payment_method"/>
+                </p>
+                <p>
+                    <strong>Total Order Amount:</strong>
+                    <t t-out="format_amount(total_amount, object.currency_id)"/>
+                </p>
+
+                <hr style="margin: 20px 0; border: none; border-top: 1px solid #ddd;"/>
+
+                <p>
+                    <strong>Message:</strong>
+                    <br/>
+                    Customer
+                    <t t-out="customer_name"/>
+                    has placed an order using Pay After Delivery.
+                    Please verify and update their record if approved.
+                </p>
+            </div>
+        </field>
+    </record>
+</odoo>
