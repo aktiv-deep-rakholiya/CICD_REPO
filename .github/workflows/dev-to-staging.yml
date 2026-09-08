@@ -1,0 +1,28 @@
+name: Auto Merge Development to Staging
+
+on:
+  push:
+    branches: [development]
+
+jobs:
+  merge-to-staging:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Merge development into staging
+        run: |
+          git fetch origin
+          git checkout staging
+          git pull origin staging
+          git merge origin/development --no-edit
+          git push origin staging
