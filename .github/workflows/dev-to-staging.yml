@@ -1,11 +1,83 @@
-name: Auto Merge Development to Staging
+name: Dev to Staging Pipeline
 
 on:
   push:
     branches: [development_branch]
 
 jobs:
+  # STEP 1-4: Install Python, Install Odoo deps, Run tests, Check code
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: odoo
+          POSTGRES_PASSWORD: odoo
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout your module
+        uses: actions/checkout@v4
+        with:
+          path: extra-addons
+
+      - name: Checkout Odoo core
+        uses: actions/checkout@v4
+        with:
+          repository: odoo/odoo
+          ref: 19.0
+          path: odoo
+          depth: 1
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wkhtmltopdf libpq-dev
+
+      - name: Install Odoo dependencies
+        run: |
+          pip install -r odoo/requirements.txt
+          pip install pylint-odoo
+
+      - name: Check code (lint)
+        run: |
+          pylint --load-plugins=pylint_odoo -d all -e odoolint extra-addons/your_module_name
+
+      - name: Run tests
+        env:
+          PGHOST: localhost
+          PGUSER: odoo
+          PGPASSWORD: odoo
+        run: |
+          python odoo/odoo-bin \
+            --addons-path=odoo/addons,extra-addons \
+            --database=test_db \
+            --db_host=localhost \
+            --db_user=odoo \
+            --db_password=odoo \
+            --stop-after-init \
+            --test-enable \
+            --test-tags=/your_module_name \
+            -i your_module_name \
+            --log-level=test
+
+  # PASS? Yes → Deploy (merge to staging)
   merge-to-staging:
+    needs: test            # only runs if 'test' job succeeds
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -16,8 +88,8 @@ jobs:
 
       - name: Configure git
         run: |
-          git config user.name "aktiv-deep-rakholiya"
-          git config user.email "deep.rakholiya@aktivsoftware.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Merge development_branch into staging
         run: |
@@ -26,3 +98,19 @@ jobs:
           git pull origin staging
           git merge origin/development_branch --no-edit
           git push origin staging
+
+  # Deploy to Staging Server
+  deploy-to-staging-server:
+    needs: merge-to-staging   # only runs after successful merge
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_HOST }}
+          username: ${{ secrets.STAGING_USER }}
+          key: ${{ secrets.STAGING_SSH_KEY }}
+          script: |
+            cd /opt/odoo/extra-addons/your_module_name
+            git pull origin staging
+            sudo systemctl restart odoo
