@@ -1,0 +1,281 @@
+<odoo>
+
+    <template id="report_timesheet_pdf_tcm">
+        <t t-call="web.html_container">
+            <main>
+                <t t-set="ctx" t-value="data or {}"/>
+                <div class="page">
+                    <style>
+                        .inner-table {
+                            border-collapse: collapse;
+                            width: 100%;
+                            font-size: 10px;
+                        }
+
+                        .inner-table th,
+                        .inner-table td {
+                            border: 1px solid black;
+                            padding: 2px;
+                        }
+                        .no-border {
+                            border: none !important;
+                        }
+                        th, td {
+                    	word-break: break-word;
+                    	}
+                        .wrap-text {
+                            white-space: pre-line;
+                        }
+                    </style>
+                    <table class="inner-table">
+                        <thead>
+                            <tr style="height:0; line-height:0; font-size:0; visibility:hidden; border:none">
+                                <td style="width:8%; padding:0; "></td>
+                                <td style="width:15%; padding:0; "></td>
+                                <td style="width:8%; padding:0;"></td>
+                                <td style="width:8%; padding:0; "></td>
+                                <td style="width:6%; padding:0; "></td>
+                                <td style="width:13%; padding:0; "></td>
+                                <td style="width:10%; padding:0; "></td>
+                                <td style="width:10%; padding:0; "></td>
+                                <td style="width:3%; padding:0; "></td>
+                                <td style="width:3%; padding:0; "></td>
+                                <td style="width:6%; padding:0; "></td>
+                                <td style="width:10%; padding:0; "></td>
+                            </tr>
+                            <tr>
+                                <td colspan="13" style="border:none;">
+                                    <img t-if="ctx.get('logo')"
+                                         t-att-src="'data:image/jpeg;base64,%s' % ctx.get('logo')"
+                                         style="height:40px;"/>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="no-border" colspan="4"></td>
+                                <td style="text-align:center;"><b>Contract</b></td>
+                                <td style="background:#ffffbd; text-align:center;">
+                                    <t t-esc="ctx.get('contract_no')"/>
+                                </td>
+                                <td style="text-align:right;">
+                                   <b><t t-esc="ctx.get('month')"/></b>
+                                </td>
+                                <td style="text-align:left;"><b>Month</b></td>
+                                <td class="no-border" colspan="5"></td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align:center; border:none;">
+                                    <div style="border:1px solid black; padding:4px; text-align:center; margin-right:-3px;">
+                                        <b>Agency</b>
+                                    </div>
+                                </td>
+                                <td style="text-align:center; border:none;">
+                                    <div style="border:1px solid black; background:#ffffbd; padding:4px; text-align:center; margin-left:-1px;">
+                                        <b><t t-esc="ctx.get('agency')"/></b>
+                                    </div>
+                                </td>
+                                <td class="no-border" colspan="2"></td>
+                                <td style="text-align:center;"><b>Project</b></td>
+                                <td style="text-align:center;">
+                                   <b><t t-esc="ctx.get('project')"/></b>
+                                </td>
+                                <td style="text-align:right;">
+                                    <b><t t-esc="ctx.get('country')"/></b>
+                                </td>
+                                <td style="text-align:left;"><b>Country</b></td>
+                                <td class="no-border" colspan="5"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="12" class="no-border" style="height:12px;"/>
+                            </tr>
+                            <tr>
+                                <th>P.O. Nr.</th>
+                                <th>Vendor</th>
+                                <th>Inspector</th>
+                                <th>Role</th>
+                                <th>Visit Date</th>
+                                <th>Report Number</th>
+                                <th>Notification No</th>
+                                <th>EICM</th>
+                                <th colspan="2"></th>
+                                <th>Expenses EUR</th>
+                                <th>Expenses Description</th>
+                            </tr>
+
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th style="background:#ffffbd;">OD</th>
+                                <th style="background:#ffffbd;">HD</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="ctx.get('rows')" t-as="r">
+                                <tr>
+                                    <td style="text-align:center;"><t t-esc="r['purchase']"/></td>
+                                    <td class="wrap-text" style="text-align:center;"><t t-esc="r['vendor']"/></td>
+                                    <td style="text-align:center;"><t t-esc="r['employee']"/></td>
+                                    <td class="wrap-text" style="text-align:center;"><t t-esc="r['employee_role']"/></td>
+                                    <td t-attf-style="text-align:center;
+                                        border-top: #{r['is_first_in_group'] and '1px solid black' or 'none'};
+                                        border-bottom: #{r['is_last_in_group'] and '1px solid black' or 'none'};">
+                                        <t t-if="r['is_first_in_group']">
+                                            <t t-esc="r['start']"/>
+                                        </t>
+                                    </td>
+                                    <td style="text-align:center;"><t t-esc="r['number']"/></td>
+                                    <td style="text-align:center;"><t t-esc="r['notification_no']"/></td>
+                                    <td style="text-align:center;"><t t-esc="r['eigl_person']"/></td>
+                                    <td t-attf-style="text-align:center;
+                                        border-top: #{r['is_first_in_group'] and '1px solid black' or 'none'};
+                                        border-bottom: #{r['is_last_in_group'] and '1px solid black' or 'none'};">
+                                        <t t-if="r['is_first_in_group']">
+                                            <t t-esc="r.get('od_value', 1)"/>
+                                        </t>
+                                    </td>
+                                    <td style="text-align:center;">-</td>
+                                    <td style="text-align:center;">-</td>
+                                    <td style="text-align:center;">
+                                        <t t-esc="r['overnight']"/>
+                                    </td>
+                                </tr>
+
+                            </t>
+                            <tr>
+                                <td colspan="8"></td>
+
+                                <td style="text-align:center;">
+                                    <t t-esc="ctx.get('total_full_day')"/>
+                                </td>
+
+                                <td style="text-align:center;">-</td>
+
+                                <td colspan="2"></td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- ── Working on Holiday / Sunday ─────────────────────── -->
+                    <t t-if="ctx.get('holiday_rows')">
+                        <t t-call="zip_reports.report_timesheet_pdf_tcm_extra_section">
+                            <t t-set="section_rows" t-value="ctx.get('holiday_rows')"/>
+                            <t t-set="section_title">Working on Holiday / Sunday</t>
+                            <t t-set="section_color" t-value="'#92D050'"/>
+                            <t t-set="section_total_od" t-value="ctx.get('holiday_total_od', 0)"/>
+                        </t>
+                    </t>
+
+                    <!-- ── Working on Extended Hours ───────────────────────── -->
+                    <t t-if="ctx.get('ext_hours_rows')">
+                        <t t-call="zip_reports.report_timesheet_pdf_tcm_extra_section">
+                            <t t-set="section_rows" t-value="ctx.get('ext_hours_rows')"/>
+                            <t t-set="section_title">Working on extended hours</t>
+                            <t t-set="section_color" t-value="'#FFFF00'"/>
+                            <t t-set="section_total_od" t-value="ctx.get('ext_total_od', 0)"/>
+                        </t>
+                    </t>
+                </div>
+                <div class="footer" style="text-align:center; font-size:10px;">
+                    <t t-esc="data.get('vendor_name', '')"/> - <t t-esc="data.get('inspector_name', '')"/> - <t t-esc="data.get('txn_str', '')"/>
+                </div>
+            </main>
+        </t>
+    </template>
+
+    <!-- Shared layout for the "extra" single-day tables (Holiday/Sunday and
+         Extended Hours). Callers set section_rows, section_title and
+         section_color before t-call. -->
+    <template id="report_timesheet_pdf_tcm_extra_section">
+        <table class="inner-table" style="margin-top:16px;">
+            <thead>
+                <tr>
+                    <th colspan="12" t-attf-style="text-align:center; background:#{section_color};">
+                        <t t-esc="section_title"/>
+                    </th>
+                </tr>
+                <tr>
+                    <th>P.O. Nr.</th>
+                    <th>Vendor</th>
+                    <th>Inspector</th>
+                    <th>Role</th>
+                    <th>Visit Date</th>
+                    <th>Report Number</th>
+                    <th>Notification No</th>
+                    <th>EICM</th>
+                    <th colspan="2"></th>
+                    <th>Expenses EUR</th>
+                    <th>Expenses Description</th>
+                </tr>
+                <tr>
+                    <th></th><th></th><th></th><th></th>
+                    <th></th><th></th><th></th><th></th>
+                    <th style="background:#ffffbd;">OD</th>
+                    <th style="background:#ffffbd;">HD</th>
+                    <th></th><th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="section_rows" t-as="r">
+                    <tr>
+                        <td style="text-align:center;"><t t-esc="r['purchase']"/></td>
+                        <td class="wrap-text" style="text-align:center;"><t t-esc="r['vendor']"/></td>
+                        <td style="text-align:center;"><t t-esc="r['employee']"/></td>
+                        <td class="wrap-text" style="text-align:center;"><t t-esc="r['employee_role']"/></td>
+                        <td style="text-align:center;"><t t-esc="r['start']"/></td>
+                        <td style="text-align:center;"><t t-esc="r['number']"/></td>
+                        <td style="text-align:center;"><t t-esc="r['notification_no']"/></td>
+                        <td style="text-align:center;"><t t-esc="r['eigl_person']"/></td>
+                        <td style="text-align:center;"><t t-esc="r.get('od_value', 1)"/></td>
+                        <td style="text-align:center;">-</td>
+                        <td style="text-align:center;">-</td>
+                        <td style="text-align:center;"><t t-esc="r['overnight']"/></td>
+                    </tr>
+                </t>
+                <tr>
+                    <td colspan="8"></td>
+                    <td style="text-align:center;">
+                        <t t-esc="section_total_od"/>
+                    </td>
+                    <td style="text-align:center;">-</td>
+                    <td colspan="2"></td>
+                </tr>
+            </tbody>
+        </table>
+    </template>
+
+    <record id="tcm_A4_paperformat" model="report.paperformat">
+        <field name="name">TCM Paperformat</field>
+        <field eval="True" name="default"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field eval="False" name="header_line"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_timesheet_pdf_tcm" model="ir.actions.report">
+        <field name="name">Timesheet TCM PDF</field>
+        <field name="model">calendar.event</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="paperformat_id" ref="zip_reports.tcm_A4_paperformat"/>
+        <field name="report_name">zip_reports.report_timesheet_pdf_tcm</field>
+        <field name="report_file">zip_reports.report_timesheet_pdf_tcm</field>
+    </record>
+
+</odoo>

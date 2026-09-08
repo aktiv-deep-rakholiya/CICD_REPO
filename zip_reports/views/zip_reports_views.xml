@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="zip_reports_view" model="ir.ui.view">
+        <field name="name">Zip Reports</field>
+        <field name="model">zip.reports</field>
+        <field name="inherit_id" ref="project_management.view_common_report"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='file']" position="before">
+                <field name="coordinator_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+            </xpath>
+            <xpath expr="//field[@name='filter_by']" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='project_id']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='vendor_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='inspector_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//footer" position="replace">
+                <footer>
+
+                    <button name="generate_report_zip" string="Download Zip" type="object" default_focus="1" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_zip_reports_menu" model="ir.actions.act_window">
+        <field name="name">Zip Reports</field>
+        <field name="res_model">zip.reports</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="zip_reports_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_zip_reports_main_menu" name="Zip Reports" parent="project_management.menu_timesheet_summary_main_root" sequence="4"/>
+    <menuitem id="menu_zip_reports" name="Zip Reports" action="action_zip_reports_menu" parent="menu_zip_reports_main_menu" sequence="1"/>
+
+</odoo>
