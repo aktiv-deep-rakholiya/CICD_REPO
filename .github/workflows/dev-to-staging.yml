@@ -16,13 +16,13 @@ jobs:
 
       - name: Configure git
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "aktiv-deep-rakholiya"
+          git config user.email "deep.rakholiya@aktivsoftware.com"
 
-      - name: Merge development into staging
+      - name: Merge development_branch into staging
         run: |
           git fetch origin
           git checkout staging
           git pull origin staging
-          git merge origin/development --no-edit
+          git merge origin/development_branch --no-edit
           git push origin staging
