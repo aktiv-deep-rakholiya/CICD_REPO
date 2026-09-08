@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="0">
+
+	<record id="calendar_rule_model_approver_person" model="ir.rule">
+        <field name="name">APPROVER</field>
+        <field ref="model_approver_person" name="model_id"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+	<record id="calendar_rule_model_service_number" model="ir.rule">
+        <field name="name">SERVICE</field>
+        <field ref="model_service_number" name="model_id"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+</data>
+</odoo>

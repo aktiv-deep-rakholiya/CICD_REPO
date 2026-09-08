@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="calendar_petrofac_event_edit_form" model="ir.ui.view">
+        <field name="name">calendar.petrofac.event.edit.form</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="project_management.calendar_event_edit_form"/>
+        <field name="arch" type="xml">
+            <field name="purchase_id" position="replace">
+                <field name="purchase_id" />
+                <field name="purchase_id_multi" widget="many2many_tags" invisible="1"/>
+            </field>
+            <field name="project_id" position="replace">
+                <field name="project_id" readonly="status in ['review', 'submit','verified']"/>
+                <field name="service_no"  widget="many2many_tags"  options="{'no_create': True, 'no_open': True}" invisible="1"/>
+                <field name="approver" invisible="1"  options="{'no_create': True, 'no_open': True}"/>
+            </field>
+            <field name="client_id" position="replace">
+                <field name="client_id" invisible="1"/>
+            </field>
+            <field name="allday" position="before">
+                <field name="end_client" invisible="client_id_new != 'neilbarnett'" readonly="status in ['review', 'submit','verified']"/>
+                <field name="job_assign" invisible="client_id_new != 'applus'"  readonly="status in ['review', 'submit','verified']"/>
+                <field name="pscjob" invisible="client_id_new != 'applus'"  readonly="status in ['review', 'submit','verified']"/>
+                <field name="agency_id_name" invisible="client_id_new not in ['tecnicas']"  readonly="status in ['review', 'submit','verified']"/>
+                <field name="travel_hrs"  invisible="client_id_new not in ['tecnicas','monarch','neilbarnett']"  readonly="status in ['review', 'submit','verified']"/>
+                <field name="report_hrs"  invisible="client_id_new not in ['tecnicas','monarch','neilbarnett']"  readonly="status in ['review', 'submit','verified']"/>
+                <field name="abortive_visit" invisible="1"/>
+                <field name="hrs" invisible="1"/>
+                <field name="extra_hrs" invisible="client_id_new in ['tecnicas']" readonly="status in ['review', 'submit','verified']"/>
+            </field>
+            <field name="eigl_person_id" position="replace">
+                    <field name="eigl_person_id" string="EICM" invisible="client_id_new != 'tcm' or event_status == 'submitforapproval'" readonly="status in ['review', 'submit','verified']" required="[('client_id_new', '=', 'tcm')]"/>
+            </field>
+            <field name="allday" position="after">
+                <field name="half_day" position="after"
+                       invisible="client_id_new in ['tecnicas', 'monarch'] and allday == True"
+                       readonly="status in ['review', 'submit', 'verified']" />
+            </field>
+            <field name="allday" position="attributes">
+                <attribute name="readonly">status in ['review','submit','verified']</attribute>
+            </field>
+            <field name="reviewer_id" position="before">
+                <field name="initiator_id" widget="selection" invisible="client_id_new != 'tcm'" readonly="event_status == 'submitforapproval' or status in ['review', 'submit','verified']" required="[('client_id_new', '=', 'tcm')]"/>
+            </field>
+            <field name="start_date" position="before">
+					<field name="txn" readonly="event_status == 'submitforapproval' or status in ['review', 'submit','verified']" required="1"/>
+                    <field name="notification_no" invisible="client_id_new != 'tcm'" readonly="event_status == 'submitforapproval' or status in ['submit','verified']"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="p4_timesheet_petrofac_summary" model="ir.ui.view">
+    <field name="name">Timesheetpetrofac</field>
+    <field name="model">calendar.event</field>
+    <field name="inherit_id" ref="project_management.p4_timesheet_summary"/>
+    <field name="arch" type="xml">
+        <field name="half_day" position="before">
+            <field name="hrs" optional="show"/>
+            <field name="extra_hrs" optional="show"/>
+            <field name="kms" optional="show"/>
+        </field>
+    </field>
+    </record>
+
+    <record id="service_view_order_tree" model="ir.ui.view">
+        <field name="name">service.number.tree</field>
+        <field name="model">calendar.event</field>
+        <field name="arch" type="xml">
+             <list>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <menuitem id="menu_configuration_main_menu" name="Configuration" parent="project_management.menu_timesheet_summary_main_root" groups="base.group_system" sequence="4"/>
+
+</odoo>
+          

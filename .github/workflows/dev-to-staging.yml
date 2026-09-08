@@ -2,7 +2,7 @@ name: Auto Merge Development to Staging
 
 on:
   push:
-    branches: [development]
+    branches: [development_branch]
 
 jobs:
   merge-to-staging:

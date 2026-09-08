@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_approver_person,approver.person,model_approver_person,base.group_user,1,1,1,1
+access_service_number,service.number,model_service_number,base.group_user,1,1,1,1
+access_client_initiator,client.initiator,model_client_initiator,base.group_user,1,1,1,1
+end_client,end.client,model_end_client,base.group_user,1,1,1,1
