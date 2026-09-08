@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="calendar_event_edit_form" model="ir.ui.view">
+        <field name="name">calendar.event.edit.form</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="button_submit" string="Submit for Review" type="object" class="oe_highlight" groups="base.group_system,project_management.group_p4_coordinator" invisible="1" context="{'button_recurrence_update': recurrence_update}"/>
+                    <button name="button_verify" string="Submit For Approval" type="object" groups="base.group_system,project_management.group_p4_reviewer" class="oe_highlight" invisible="1" context="{'button_recurrence_update': recurrence_update}"/>
+                    <button name="button_approve" type="object" string="Approve" groups="base.group_system,project_management.group_p4_manager" class="oe_highlight" invisible="1" context="{'button_recurrence_update': recurrence_update}"/>
+                    <button name="button_reject" type="object" string="Reject" groups="base.group_system,project_management.group_p4_manager" class="oe_highlight" invisible="1" context="{'button_recurrence_update': recurrence_update}"/>
+                    <button name="button_coordinator_submit" type="object" string="Submit" groups="base.group_system,project_management.group_p4_coordinator" invisible="1" context="{'button_recurrence_update': recurrence_update}"/>
+                    <button name="button_reopen" type="object" string="Re-Open"
+                            groups="project_management.group_allow_reopen"
+                            invisible="status != 'review'"
+                            context="{'button_recurrence_update': recurrence_update}"/>
+                    <field name="status" widget="statusbar" statusbar_visible="open,review,verified,submit" invisible="1"/>
+                    <field name="event_status" widget="statusbar" invisible="1"/>
+                </header>
+            </xpath>
+            <xpath expr="//label[@for='duration']" position="attributes">
+                <attribute name="invisible">allday</attribute>
+            </xpath>
+            <xpath expr="//div[@class='d-flex gap-2']" position="replace">
+                <div class="d-flex gap-2">
+                    <div class="d-flex align-items-start" invisible="allday">
+                        <field name="duration" widget="float_time" string="Duration" class="oe_inline pe-2" readonly="(id and recurrency) or not user_can_edit"/>
+                        <span> hours</span>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@class='d-flex gap-2']" position="after">
+                <field name="allday" class="oe_inline" widget="boolean_toggle" force_save="1" options="{'autosave': False}" readonly="not user_can_edit"/>
+            </xpath>
+            <xpath expr="//div[field[@name='accepted_count'] and field[@name='tentative_count'] and field[@name='declined_count'] and field[@name='awaiting_count']]" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//div[@class='o_row'][.//field[@name='attendees_count']]" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//div[@class='d-flex align-items-baseline' and .//field[@name='partner_ids']]" position="replace">
+            </xpath>
+            <xpath expr="//div[@class='oe_title mb-3']" position="after">
+                <div class="d-flex align-items-baseline" colspan="2">
+                    <field name="partner_ids"
+                           widget="many2manyattendee"
+                           placeholder="Select attendees..."
+                           options="{'no_quick_create': True}"
+                           context="{'form_view_ref': 'base.view_partner_simple_form'}"
+                           domain="[('type','!=','private')]"
+                           class="oe_inline"
+                           readonly="not user_can_edit"/>
+                </div>
+            </xpath>
+            <div name="button_box" position="inside">
+                <button  class="oe_stat_button" name="attachment_tree_view" type="object" icon="fa-files-o">
+                    <field string="Documents" name="doc_count" widget="statinfo"/>
+                </button>
+            </div>
+            <field name="alarm_ids" position="before">
+                <field name="proj_state" invisible = "1"/>
+                <field name="commercial_coordinator_id" readonly="1" force_save="1" invisible="1"/>
+                <field name="task_id" invisible = "1"/>
+                <field name="employee" invisible="1"/>
+                <field name="approved_inspector"
+                           readonly="event_status == 'submitforapproval' or status in ['review', 'submit', 'verified']" required="1"/>
+                <field name="project_id" options="{'no_create': True, 'no_create_edit':True}" readonly="status in ['open','review', 'submit','verified']"/>
+                <field name="purchase_id"  force_save="1"
+                           readonly="event_status == 'submitforapproval' or status in ['review', 'submit', 'verified']"/>
+                <field name="vendor_id" readonly="1" force_save="1" widget="many2many_tags"/>
+                <field name="sub_vendor" widget="many2many_tags"
+                    readonly="event_status == 'submitforapproval' or status in ['review', 'submit', 'verified']"/>
+                <field name="rpt_number"
+                    readonly="event_status == 'submitforapproval' or status in ['submit', 'verified']"/>
+                <field name="provisional"
+                           readonly="event_status == 'submitforapproval' or status in ['submit', 'verified']"/>
+                <field name="last_message" invisible="1"/>
+            </field>
+            <field name="allday" position="before">
+                <field name="compute_field" invisible="1"/>
+                <field name="v_location"
+                    readonly="event_status == 'submitforapproval' or status in ['review', 'submit', 'verified']" required="1"/>
+                <field name="is_direct"
+                    readonly="event_status == 'submitforapproval' or status in ['review', 'submit', 'verified']"/>
+                <field name="include_timesheet" groups="project_management.group_allow_include_pending_timesheet"/>
+                <field name="eigl_person_id" string="EICM"
+                    readonly="event_status == 'submitforapproval' or status in ['review', 'submit', 'verified']"/>
+                <field name="reviewer_id" widget="selection"
+                           groups="project_management.group_p4_coordinator,base.group_system,project_management.group_enquiry_ceo,project_management.group_p4_manager"
+                           readonly="status in ['review', 'submit', 'verified']" required="event_status != 'createcalanderevent' and status != 'open' and not is_direct"/>
+                <field name="approver_id" widget="selection"
+                       groups="project_management.group_enquiry_ceo,project_management.group_p4_reviewer,base.group_system,project_management.group_p4_manager"
+                       readonly="status in ['submit', 'verified']" required="event_status != 'createcalanderevent' and status != 'open' and not is_direct"/>
+                <field name="overnight_expense"
+                           readonly="status in ['review', 'submit','verified']"/>
+                <field name="with_stay" invisible="1"/>
+                <field name="without_stay" invisible="1"/>
+                <field name="skip_man_day"/>
+                <field name="is_worked_on_holiday_sunday"
+                           readonly="status in ['review', 'submit','verified']"/>
+                <field name="is_worked_on_extended_hours"
+                           readonly="status in ['review', 'submit','verified']"/>
+            </field>
+
+            <field name="location" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
+            <field name="alarm_ids" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
+            <field name="name" position="attributes">
+                <attribute name="readonly">event_status == 'submitforapproval' or status in ['review', 'submit', 'verified']</attribute>
+            </field>
+            <field name="categ_ids" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
+            <field name="allday" position="before">
+                <field name="client_id"/>
+                <field name="client_id_new" invisible="1"
+                       readonly="event_status == 'submitforapproval' or status in ['review', 'submit', 'verified']"/>
+            </field>
+            <xpath expr="//field[@name='start_date']" position="before">
+                <field name="inspection_coordinator"
+                       readonly="event_status == 'submitforapproval' or status in ['review', 'submit', 'verified']" required="1"/>
+                <field name="cat_location"
+                        invisible="client_id_new not in ['tcm']" readonly="event_status == 'submitforapproval' or status in ['review', 'submit','verified']"/>
+                <field name="employee_role" options="{'no_create': True, 'no_create_edit':True}"
+                       readonly="event_status == 'submitforapproval' or status in ['review', 'submit', 'verified']" required="1"/>
+                <field name="category_expenses"
+                        invisible="client_id_new not in ['tcm']" readonly="event_status == 'submitforapproval' or status in ['review', 'submit', 'verified']" required="[('client_id_new', '=', 'tcm')]"/>
+                <field name="services"
+                        readonly="event_status == 'submitforapproval' or status in ['review', 'submit', 'verified']" invisible="1"/>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page[@name='page_invitations']" position="attributes">
+                <attribute name='invisible'>1</attribute>
+            </xpath>
+            <field name="videocall_location" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
+            <field name="user_id" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
+            <xpath expr="//button[@name='clear_videocall_location']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//button[@name='set_discuss_videocall_location']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_join_video_call']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='current_status']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="search_calendar_event_edit_view" model="ir.ui.view">
+        <field name="name">search.calendar.event.edit.view</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search/group" position="before">
+                <filter name="my_filter_name1" string="Date" context="{'group_by': 'start:month'}"/>
+                <filter name="status" string="Status" domain="[]" context="{'group_by': 'status'}"/>
+                <filter name="open" string="Open" domain="[('status','=','open')]"/>
+                <filter name="skip_man_days" string="Skip Man Days" domain="[('skip_man_day','=',True)]"/>
+                <filter name="review" string="Waiting for Review" domain="[('status','=','review')]"/>
+                <filter name="approval" string="Waiting for Approval" domain="[('status','=','submit')]"/>
+                 <filter name="approved" string="Approved" domain="[('status','=','verified')]"/>
+                <filter name="reviewer" string="Reviewer" domain="[]" context="{'group_by':'reviewer_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="tree_calendar_event_edit_view" model="ir.ui.view">
+        <field name="name">tree.calendar.event.edit.tree</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_tree"/>
+        <field name="arch" type="xml">
+            <field name="partner_ids" position="replace">
+                <field name="partner_ids" widget="many2many_tags" readonly="1"/>
+            </field>
+            <field name="location" position="after">
+                <field name="reviewer_id"/>
+                <field name="approver_id"/>
+                <field name="status"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="p4_timesheet_summary" model="ir.ui.view">
+        <field name="name">Timesheet</field>
+        <field name="model">calendar.event</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="purchase_id" string="P.O.Nr" optional="show"/>
+                <field name="vendor_id" string="VENDOR" optional="show" widget="many2many_tags"/>
+                <field name="sub_vendor" string="SUB VENDOR" optional="show" widget="many2many_tags"/>
+                <field name="employee" string='APPROVED INSPECTOR' optional="show"/>
+                <field name="employee_role" string='ROLE' optional="show"/>
+                <field name="start" string="VISIT DATE" widget="date" optional="show"/>
+                <field name="rpt_number" string="REPORT N." optional="show"/>
+                <field name="eigl_person_id" string="EICM" optional="show"/>
+                <field name="allday" string="Full Day" optional="show"/>
+                <field name="half_day" string="Half Day" optional="show"/>
+                <field name="project_id" string="Project" optional="show"/>
+                <field name="v_location" string="Location" optional="show"/>
+                <field name="user_id" string="Responsible" optional="show"/>
+                <field name="state" column_invisible="1"/>
+                <field name="name" column_invisible="1"/>
+                <field name="last_message" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_calendar_event_form_quick_create_inherit" model="ir.ui.view">
+        <field name="name">calendar.event.form.quick_create.inherit</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form_quick_create"/>
+        <field name="arch" type="xml">
+            <field name="videocall_location" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
+            <xpath expr="//button[@name='clear_videocall_location']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//button[@name='set_discuss_videocall_location']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_join_video_call']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <field name="partner_ids" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="action_p4_timesheet_summary" model="ir.actions.act_window">
+        <field name="name">Visit Summary</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">calendar.event</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="p4_timesheet_summary"/>
+        <field name="context">{}</field>
+    </record>
+    <record id="action_calendar_event_multi_approve" model="ir.actions.server">
+        <field name="name">Approve Calendar Events</field>
+        <field name="model_id" ref="calendar.model_calendar_event"/>
+        <field name="binding_model_id" ref="calendar.model_calendar_event"/>
+        <field name="state">code</field>
+        <field name="code">
+            records.button_approve()
+        </field>
+        <field name="binding_type">action</field>
+    </record>
+    <menuitem id="menu_timesheet_summary_main_root" name="Visit Summary" sequence="5" action="action_p4_timesheet_summary"/>
+    <menuitem id='activity_description_menu' name="Activity Description" action="action_activity_description"
+                  parent="project.menu_project_config"/>
+
+</odoo>

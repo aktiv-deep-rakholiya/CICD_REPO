@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_global_scs_summary_report_menu" model="ir.actions.act_window">
+        <field name="name">Timesheet Report</field>
+        <field name="res_model">global.scs.summary.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="project_management.view_common_report"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_global_scs_report" name="Global SCS" action="action_global_scs_summary_report_menu" parent="prime4_report.menu_timesheet_summary_report_main" sequence="11"/>
+    <menuitem id="menu_sisr_report" name="SISR" action="action_global_scs_summary_report_menu" parent="prime4_report.menu_timesheet_summary_report_main" sequence="11"/>
+    <menuitem id="menu_tecton_report" name="TECTON" action="action_global_scs_summary_report_menu" parent="prime4_report.menu_timesheet_summary_report_main" sequence="11"/>
+    <!-- <menuitem id="menu_swiss_approval_report" name="Swiss Approval" action="action_global_scs_summary_report_menu" parent="prime4_report.menu_timesheet_summary_report_main" sequence="11"/> -->
+
+</odoo>

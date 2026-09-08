@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+project_enquiry_c,project.enquiry.c,model_project_enquiry,project_management.group_enquiry_coordinator,1,1,1,1
+lost_wizard,lost.wizard,model_lost_wizard,base.group_user,1,1,1,1
+lost_wizard_admin,lost.wizard,model_lost_wizard,base.group_system,1,1,1,1
+project_enquiry_m,project.enquiry.m,model_project_enquiry,project_management.group_p4_manager,1,1,0,0
+project_enquiry_ceo,project.enquiry.ceo,model_project_enquiry,project_management.group_enquiry_ceo,1,1,0,0
+calendar_event_c,calendar.event.c,model_calendar_event,project_management.group_enquiry_coordinator,1,1,1,0
+calendar_event_i,calendar.event.i,model_calendar_event,project_management.group_p4_coordinator,1,1,1,0
+project_enquiry_i_c,project.enquiry.c,model_project_enquiry,project_management.group_p4_coordinator,1,1,0,0
+project_enquiry_admin,project.enquiry.c,model_project_enquiry,base.group_system,1,1,1,1
+calendar_event_m,calendar.event.m,model_calendar_event,project_management.group_p4_manager,1,1,0,0
+calendar_event_ceo,calendar.event.ceo,model_calendar_event,project_management.group_enquiry_ceo,1,1,0,0
+calendar_event_admin,calendar.event.ceo,model_calendar_event,base.group_system,1,1,1,1
+enquiry_sequence_admin,enquiry.sequence.admin,model_enquiry_sequence,base.group_system,1,1,1,1
+enquiry_sequence_user,enquiry_sequence.user,model_enquiry_sequence,base.group_user,1,1,1,1

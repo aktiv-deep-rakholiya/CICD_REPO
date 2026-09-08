@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="task_management_view_form" model="ir.ui.view">
+        <field name="name">task.management.view.form</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='description_page']" position="attributes">
+                <attribute name="string">Narrative Of Expediting</attribute>
+            </xpath>
+            <xpath expr="//form/sheet/notebook/page[@name='description_page']" position="before">
+                <page name="progress_activity_line" string="Progress Of Main Activity">
+                    <field name="progress_activity_line" nolabel="1" >
+                        <list editable="bottom" string="Task Status">
+                            <field name="name"/>
+                            <field name="percentage"/>
+                            <field name="planned_starting_date"/>
+                            <field name="actual_starting_date"/>
+                            <field name="expected_completion_date"/>
+                            <field name="actual_completion_date"/>
+                            <field name="subvendor_item" />
+                            <field name="doc_po"/>
+                            <field name="subvendor_name"/>
+                            <field name="subvendor_po"/>
+                            <field name="delivery_date_order"/>
+                            <field name="delivery_date_promised"/>
+                            <field name="delivery_date_actual"/>
+                            <field name="sub_order_date_scheduled"/>
+                            <field name="sub_order_date_actual"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+
+            <xpath expr="//form/sheet/notebook/page[@name='description_page']" position="before">
+                <page name="progress_activity_line" string="Critical Suborder Status">
+                    <field name="progress_activity_line" nolabel="1" >
+                        <list editable="bottom" string="Task Status">
+                           <field name="name"/>
+                            <field name="percentage"/>
+                            <field name="planned_starting_date"/>
+                            <field name="actual_starting_date"/>
+                            <field name="expected_completion_date"/>
+                            <field name="actual_completion_date"/>
+                            <field name="subvendor_item" />
+                            <field name="doc_po"/>
+                            <field name="subvendor_name"/>
+                            <field name="subvendor_po"/>
+                            <field name="delivery_date_order"/>
+                            <field name="delivery_date_promised"/>
+                            <field name="delivery_date_actual"/>
+                            <field name="sub_order_date_scheduled"/>
+                            <field name="sub_order_date_actual"/>
+
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//form/sheet/notebook/page[@name='description_page']" position="before">
+                <page name="progress_activity_line" string="Order Delivery Date">
+                    <field name="progress_activity_line" nolabel="1" >
+                        <list editable="bottom" string="Task Status">
+                            <field name="name"/>
+                            <field name="percentage"/>
+                            <field name="planned_starting_date"/>
+                            <field name="actual_starting_date"/>
+                            <field name="expected_completion_date"/>
+                            <field name="actual_completion_date"/>
+                            <field name="subvendor_item" />
+                            <field name="doc_po"/>
+                            <field name="subvendor_name"/>
+                            <field name="subvendor_po"/>
+                            <field name="delivery_date_order"/>
+                            <field name="delivery_date_promised"/>
+                            <field name="delivery_date_actual"/>
+                            <field name="sub_order_date_scheduled"/>
+                            <field name="sub_order_date_actual"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//form/sheet/notebook/page[@name='description_page']" position="before">
+                <page name="progress_activity_line" string="Preliminary Packing Information">
+                    <field name="progress_activity_line" nolabel="1" >
+                        <list editable="bottom" string="Task Status">
+
+                            <field name="name"/>
+                            <field name="percentage"/>
+                            <field name="planned_starting_date"/>
+                            <field name="actual_starting_date"/>
+                            <field name="expected_completion_date"/>
+                            <field name="actual_completion_date"/>
+                            <field name="subvendor_item" />
+                            <field name="doc_po"/>
+                            <field name="subvendor_name"/>
+                            <field name="subvendor_po"/>
+                            <field name="delivery_date_order"/>
+                            <field name="delivery_date_promised"/>
+                            <field name="delivery_date_actual"/>
+                            <field name="sub_order_date_scheduled"/>
+                            <field name="sub_order_date_actual"/>
+
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

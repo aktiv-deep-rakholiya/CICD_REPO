@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="enquiry_list_view" model="ir.ui.view">
+        <field name="name">enquiry.list.tree</field>
+        <field name="model">project.enquiry</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="serial_no" />
+                <field name="unique_no"/>
+                <field name="client_name" string="Client Name"/>
+                <field name="country" />
+                <field name="enquiry_date" />
+                <field name="project_id"/>
+                <field name="eigl_person_id" string="EICM"/>
+                <field name="purchase_id" string="PO No."/>
+                <field name="vendor_id" widget="many2many_tags" />
+                <field name="proposed_inspectors" widget="many2many_tags"/>
+                <field name="approved_inspector" widget="many2many_tags" />
+                <field name="date_of_cv_submission" readonly="1"/>
+                <field name="is_calendar_event_created" string="Event Created"/>
+                <field name="is_service_agreement_created"/>
+                <field name="employee_role" string="Role" />
+                <field name="services" string="Services" />
+                <field name="status"/>
+                <field name="lost_reason" column_invisible="1"/>
+                <field name="company_id" column_invisible="1" />
+            </list>
+        </field>
+    </record>
+
+    <record id="enquiry_form_view" model="ir.ui.view">
+        <field name="name">enquiry.form</field>
+        <field name="model">project.enquiry</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button class="oe_highlight" string="Mark Won" type="object" name="won_statusbar"
+                            groups="base.group_system,project_management.group_enquiry_coordinator"
+                            invisible="status in ['new','won','lost'] or stage in ['approved','rejected']"/>
+                    <button name="%(enquiry_module.reason_for_lost_action)d" string="Mark Lost" type="action"
+                            class="oe_highlight" groups="base.group_system,project_management.group_enquiry_coordinator"
+                            invisible="status in ['new','won','lost'] or stage in ['approved','rejected']"/>
+                    <button class="oe_highlight" string="Request For Edit" type="object" name="edit_statusbar"
+                            groups="base.group_system,project_management.group_enquiry_coordinator"
+                            invisible="status not in ['won'] or is_requested or after_approve_button"/>
+                    <button class="oe_highlight" string="Approve" type="object" name="approve_statusbar"
+                            groups="base.group_system,project_management.group_enquiry_ceo,project_management.group_p4_manager"
+                            invisible="not after_approve_button"/>
+                    <button class="oe_highlight" string="Reject" type="object" name="reject_statusbar"
+                            groups="base.group_system,project_management.group_enquiry_ceo,project_management.group_p4_manager"
+                            invisible="not after_approve_button"/>
+                    <button class="oe_highlight" string="Hold" type="object" name="action_hold"
+                            invisible="status in ['new','lost','hold'] or stage in ['rejected']"/>
+                    <button class="oe_highlight" string="Reset to New" type="object" name="reset_to_new"
+                            groups="base.group_system,project_management.group_enquiry_ceo"
+                            invisible="status != 'lost'"/>
+                    <button name="action_schedule_meeting" string="Create Calendar Event " type="object"
+                            groups="base.group_system,project_management.group_enquiry_coordinator"
+                            class="oe_highlight"
+                            invisible="is_calendar_event_created or status != 'won'"/>
+                    <field name="status" widget="statusbar"
+                          invisible="stage in ['approved','rejected']"/>
+                    <field name="stage" widget="statusbar"
+                           invisible="status in ['new','pending','lost'] or stage not in ['approved','rejected']"/>
+                </header>
+
+                <sheet>
+                    <div name="button_box" position="inside">
+                        <button name="action_view_calender" type="object" string="Calender"
+                                invisible="calendar_count == 0"
+                                class="oe_stat_button" icon="fa-calendar">
+                             <field string="Calendar" name="calendar_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Lost" bg_color="bg-danger"
+                            invisible="status != 'lost'"/>
+                    <widget name="web_ribbon" title="Won" bg_color="bg-success"
+                            invisible="status != 'won'"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="unique_no" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <div class="oe_title">
+                        <div class="oe_inline oe_edit_only">
+                            <label for="serial_no"/>
+                            <field name="serial_no"/>
+                        </div>
+                    </div>
+                    <br></br>
+                    <group>
+                        <group>
+                            <field name="client_id" options="{'no_create': True, 'no_open': True}"
+                                   readonly="client_id and unique_no != 'New'" required="1"/>
+                            <field name="inspection_coordinator" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="client_name" invisible="1"/>
+                            <field name="resource_type"
+                                   readonly="status == 'won' and not field_edit"
+                                   required="1"/>
+                            <field name="year" required="1"
+                                   readonly="client_id and unique_no != 'New'"/>
+                            <field name="employee_role" string="Role"
+                                   readonly="status == 'won' and not field_edit"/>
+                            <field name="tags"
+                                   readonly="status == 'won' and not field_edit"/>
+                            <field name="cat_location" string="Location" options="{'no_create': True, 'no_open': True}"
+                                   invisible="client_name not in ['tcm']" readonly="status == 'won' and not field_edit"/>
+                            <field name="category_expenses" string="JOB Duration"
+                                   options="{'no_create': True, 'no_open': True}"
+                                   invisible="client_name not in ['tcm']" readonly="status == 'won' and not field_edit"/>
+                            <field name="services" string="Services"
+                                   invisible="client_name not in ['tcm']" readonly="status == 'won' and not field_edit"/>
+                            <field name="country" options="{'no_create': True, 'no_open': True}" required="1"
+                                   readonly="client_id != False and unique_no != 'New'"/>
+                            <field name="calendar_count" readonly="1" force_save="1" invisible="1"/>
+                            <field name="is_calendar_event_created" invisible="1"/>
+                            <field name="is_approve_button" invisible="1"/>
+                            <field name="field_edit" invisible="1"/>
+                            <field name="after_approve_button" invisible="1"/>
+                            <field name="approve_button" invisible="1"/>
+                            <field name="is_requested" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="is_service_agreement_created" invisible="resource_type != 'external'"/>
+                            <field name="tax_id" string="Tax" widget="many2many_tags" invisible="1"/>
+                            <field name="is_sequence_created" invisible="1"/>
+                            <field name="lost_reason" invisible="1"/>
+                            <field name="priority" widget="priority"
+                                   readonly="status == 'won' and not field_edit"/>
+                        </group>
+                        <group>
+                            <field name="enquiry_date" string="Enquiry Date"
+                                   readonly="status == 'won' and not field_edit"/>
+                            <field name="date_of_cv_submission"
+                                   readonly="status == 'won' and not field_edit"/>
+                            <field name="visit_date"
+                                   readonly="status == 'won' and not field_edit"/>
+                            <field name="project_id"
+                                   readonly="status == 'won' and not field_edit"/>
+                            <field name="purchase_id" domain="[('is_service_agreement', '=', False)]"
+                                   readonly="status == 'won' and not field_edit"
+                                   context="{'form_view_ref': 'enquiry_module.view_purchase_order_minimal_form'}"/>
+                            <field name="vendor_id" widget="many2many_tags" readonly="1" force_save="1"/>
+                            <field name="sub_vendor" widget="many2many_tags"
+                                   readonly="status == 'won' and not field_edit"/>
+                            <field name="eigl_person_id" string="EICM"
+                                   readonly="status == 'won' and not field_edit"/>
+                            <field name="proposed_inspectors" widget="many2many_tags"
+                                   readonly="status == 'won' and not field_edit"/>
+                            <field name="approved_inspector" widget="many2many_tags"
+                                   domain='[("id", "in", proposed_inspectors)]'
+                                   options="{'no_create': True, 'no_open': True}"
+                                   readonly="status == 'won' and not field_edit"/>
+                            <field name="rate_list" widget="radio"
+                                   readonly="status == 'won' and not field_edit"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Internal Notes">
+                            <field name="description" placeholder=" Add a Description....  "
+                                   readonly="status in ['won','lost'] or stage in ['approved','rejected']"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="enquiry_list_action" model="ir.actions.act_window">
+        <field name="name">Enquiry List</field>
+        <field name="res_model">project.enquiry</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="view_enquiry_filter" model="ir.ui.view">
+        <field name="name">project.enquiry.search</field>
+        <field name="model">project.enquiry</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <filter name="won" string="Won" domain="[('status','=','won')]" />
+                <filter name="lost" string="Lost" domain="[('status','=','lost')]" />
+                <filter name="hold" string="Hold" domain="[('status','=','hold')]" />
+                <filter name="pending" string="Pending" domain="[('status','=','pending')]" />
+                <field name="project_id" string="Project"/>
+                <field name="vendor_id" string="Vendor"/>
+                <field name="purchase_id" string="Purchase Order"/>
+                <field name="client_id" string="Client"/>
+                <field name="inspection_coordinator" string="Inspection Coordinator"/>
+                <field name="resource_type" string="Resource Type"/>
+                <field name="is_calendar_event_created" string="Is Calendar Created ?"/>
+                <field name="services" string="Services"/>
+                <field name="category_expenses" string="JOB Duration"/>
+                <field name="cat_location" string="Location"/>
+                <field name="employee_role" string="Role"/>
+                <field name="country" string="Country"/>
+                <field name="status" string="Status"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Project" name="group_by_project" domain="[]" context="{'group_by': 'project_id'}"/>
+                    <filter string="Client" name="group_by_client" domain="[]" context="{'group_by': 'client_id'}"/>
+                    <filter string="Inspection Coordinator" name="group_by_inspection_coordinator" domain="[]" context="{'group_by': 'inspection_coordinator'}"/>
+                    <filter string="Resource Type" name="group_by_resource_type" domain="[]" context="{'group_by': 'resource_type'}"/>
+                    <filter string="Is Calendar Created ?" name="group_by_is_calendar_event_created" domain="[]" context="{'group_by': 'is_calendar_event_created'}"/>
+                    <filter string="Services" name="group_by_services" domain="[]" context="{'group_by': 'services'}"/>
+                    <filter string="Category" name="group_by_category_expenses" domain="[]" context="{'group_by': 'category_expenses'}"/>
+                    <filter string="Location" name="group_by_cat_location" domain="[]" context="{'group_by': 'cat_location'}"/>
+                    <filter string="Role" name="group_by_employee_role" domain="[]" context="{'group_by': 'employee_role'}"/>
+                    <filter string="Country" name="group_by_country" domain="[]" context="{'group_by': 'country'}"/>
+                    <filter string="Status" name="group_by_status" domain="[]" context="{'group_by': 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_purchase_order_minimal_form" model="ir.ui.view">
+        <field name="name">Purchase form</field>
+        <field name="model">purchase.order</field>
+        <field eval="25" name="priority"/>
+        <field name="arch" type="xml">
+            <form string="Purchase Order">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" string="Purchase Order"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="partner_id" widget="res_partner_many2one"
+                                       context="{'res_partner_search_mode': 'supplier', 'show_vat': True}"
+                                       placeholder="Name, TIN, Email, or Reference"/>
+                        <field name="purchase_date"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem id="enquiry_root_menu" action="enquiry_list_action" name="Enquiry"/>
+
+</odoo>

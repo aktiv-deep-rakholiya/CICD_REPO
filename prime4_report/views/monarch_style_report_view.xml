@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="monarch_style_report_menu" model="ir.actions.act_window">
+        <field name="name">Monarch Style Timesheet Report</field>
+        <field name="res_model">monarch.style.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="project_management.view_common_report"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_monarch_style_report" name="Monarch Style" action="monarch_style_report_menu" parent="prime4_report.menu_timesheet_summary_report_main" sequence="20"/>
+
+</odoo>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="client_master_view" model="ir.ui.view">
+        <field name="name">client.master.tree</field>
+        <field name="model">client.master</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" optional="show"/>
+                <field name="code" optional="show" column_invisible="1"/>
+                <field name="price_list_id" optional="show"/>
+                <field name="payment_term_id" optional="show" />
+                 <field name="client_name" optional="show" />
+            </list>
+        </field>
+    </record>
+
+    <record id="client_master_form_view" model="ir.ui.view">
+        <field name="name">client.master.form</field>
+        <field name="model">client.master</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="price_list_id" options='{"no_open": True, "no_create": True}'/>
+                            <field name="client_name" required="1"/>
+                             <label for="street_page_lead" string="Address"/>
+                                <div class="o_address_format">
+                                    <field name="street" id="street_page_lead" placeholder="Street..." class="o_address_street"   force_save="1"/>
+                                    <field name="street2" placeholder="Street 2..." class="o_address_street"  force_save="1"/>
+                                    <field name="city" placeholder="City" class="o_address_city" force_save="1"/>
+                                    <field name="state_id" class="o_address_state" placeholder="State" ooptions='{"no_open": True, "no_create": True}'  force_save="1"/>
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip"  force_save="1"/>
+                                    <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}' force_save="1"/>
+                                </div>
+                             <field name="email" widget="url"/>
+                              <field name="tax_ids" widget="many2many_tags" options='{"no_open": True, "no_create": True}'/>
+                        </group>
+
+                        <group>
+                            <field name="code" string="Report Code"/>
+                            <field name="sequence_code" required="1" string="Sequence Code"/>
+                            <field name="payment_term_id" options='{"no_open": True, "no_create": True}'/>
+                            <field name="company_id" invisible="1" />
+                            <field name="vat_code" string="Vat Code" />
+                            <field name="mobile" string="Mobile" />
+                            <field name="fax" string="Fax" />
+                            <field name="trn" string="TRN" />
+                            <field name="currency_id" options='{"no_open": True, "no_create": True}'/>
+                            <field name="attn" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_client_master" model="ir.actions.act_window">
+        <field name="name">Client Master</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">client.master</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="applus_summary_report_view" model="ir.ui.view">
+        <field name="name">Applus Timesheet Report</field>
+        <field name="model">applus.summary.report</field>
+        <field name="inherit_id" ref="project_management.view_common_report"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='inspector_id']" position="after">
+                <field name="date_submit"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="applus_summary_report_menu" model="ir.actions.act_window">
+        <field name="name">Applus Timesheet Report</field>
+        <field name="res_model">applus.summary.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="applus_summary_report_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_applus_report" name="Applus Velosi" action="applus_summary_report_menu" parent="prime4_report.menu_timesheet_summary_report_main" sequence="23"/>
+
+</odoo>

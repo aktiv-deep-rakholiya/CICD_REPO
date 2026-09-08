@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="seq_visit_summary" model="ir.sequence">
+            <field name="name">Visit Summary</field>
+            <field name="code">visit.summary</field>
+            <field name="prefix">VS</field>
+            <field name="padding">3</field>
+            <field name="implementation">no_gap</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="invoice_sequence_tcm" model="ir.sequence">
+            <field name="name">TCM Invoice Sequence</field>
+            <field name="code">invoice.no.TCM</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="petrofac_invoice_sequence" model="ir.sequence">
+            <field name="name">Petrofac Invoice Sequence</field>
+            <field name="code">invoice.no.PETROFAC</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="ace_invoice_sequence" model="ir.sequence">
+            <field name="name">Ace Invoice Sequence</field>
+            <field name="code">invoice.no.ACE</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="eneico_invoice_sequence" model="ir.sequence">
+            <field name="name">Eneico Invoice Sequence</field>
+            <field name="code">invoice.no.ENIECO</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="edif_invoice_sequence" model="ir.sequence">
+            <field name="name">Edif Invoice Sequence</field>
+            <field name="code">invoice.no.NDE</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="equasrl_invoice_sequence" model="ir.sequence">
+            <field name="name">Equasrl Invoice Sequence</field>
+            <field name="code">invoice.no.EQUA</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="lindinger_invoice_sequence" model="ir.sequence">
+            <field name="name">Lindinger Invoice Sequence</field>
+            <field name="code">invoice.no.Lindinger</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="spxflow_invoice_sequence" model="ir.sequence">
+            <field name="name">Spxflow Invoice Sequence</field>
+            <field name="code">invoice.no.spxflow</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="global_invoice_sequence" model="ir.sequence">
+            <field name="name">Global Invoice Sequence</field>
+            <field name="code">invoice.no.GQS</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="invoice_sequence" model="ir.sequence">
+            <field name="name">Invoice Sequence</field>
+            <field name="code">invoice.no.TCM</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="tecnicas_invoice_sequence" model="ir.sequence">
+            <field name="name">Tecnicas Invoice Sequence</field>
+            <field name="code">invoice.no.TR</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="tecton_invoice_sequence" model="ir.sequence">
+            <field name="name">Tecton Invoice Sequence</field>
+            <field name="code">invoice.no.TECTON</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="arotec_invoice_sequence" model="ir.sequence">
+            <field name="name">Arotec Invoice Sequence</field>
+            <field name="code">invoice.no.arotec</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="edif_invoice_sequence" model="ir.sequence">
+            <field name="name">Edif Invoice Sequence</field>
+            <field name="code">invoice.no.edif</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="clatech_invoice_sequence" model="ir.sequence">
+            <field name="name">Clatech Invoice Sequence</field>
+            <field name="code">invoice.no.clatech</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="sisisrl_invoice_sequence" model="ir.sequence">
+            <field name="name">Sisisrl Invoice Sequence</field>
+            <field name="code">invoice.no.SISI</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="stamicarbon_invoice_sequence" model="ir.sequence">
+            <field name="name">Stamicarbon Invoice Sequence</field>
+            <field name="code">invoice.no.STAMICARBON</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="jkinspection_invoice_sequence" model="ir.sequence">
+            <field name="name">Jkinspection Invoice Sequence</field>
+            <field name="code">invoice.no.jkinspection</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="monarch_invoice_sequence" model="ir.sequence">
+            <field name="name">Monarch Invoice Sequence</field>
+            <field name="code">invoice.no.MONARCH</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="inspectorunion_invoice_sequence" model="ir.sequence">
+            <field name="name">Inspectorunion Invoice Sequence</field>
+            <field name="code">invoice.no.inspectorunion</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="swissapproval_invoice_sequence" model="ir.sequence">
+            <field name="name">Swissapproval Invoice Sequence</field>
+            <field name="code">invoice.no.SWISS</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="neilbarnett_invoice_sequence" model="ir.sequence">
+            <field name="name">Neilbarnett Invoice Sequence</field>
+            <field name="code">invoice.no.NEIL</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="applus_invoice_sequence" model="ir.sequence">
+            <field name="name">Applus Invoice Sequence</field>
+            <field name="code">invoice.no.VELOSI</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="enzone_invoice_sequence" model="ir.sequence">
+            <field name="name">enzone Invoice Sequence</field>
+            <field name="code">invoice.no.ENZONE</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="bureau_invoice_sequence" model="ir.sequence">
+            <field name="name">bureau Invoice Sequence</field>
+            <field name="code">invoice.no.BUREAU</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="unitedglobal_invoice_sequence" model="ir.sequence">
+            <field name="name">unitedglobal Invoice Sequence</field>
+            <field name="code">invoice.no.UGEI</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="teleios_invoice_sequence" model="ir.sequence">
+            <field name="name">teleios Invoice Sequence</field>
+            <field name="code">invoice.no.TSE</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="phbweser_invoice_sequence" model="ir.sequence">
+            <field name="name">phbweser Invoice Sequence</field>
+            <field name="code">invoice.no.PHB</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="apollo_invoice_sequence" model="ir.sequence">
+            <field name="name">apollo Invoice Sequence</field>
+            <field name="code">invoice.no.apollo</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+         <record id="others_invoice_sequence" model="ir.sequence">
+            <field name="name">others Invoice Sequence</field>
+            <field name="code">invoice.no.others</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">3</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

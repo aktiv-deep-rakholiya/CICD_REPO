@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="petrofac_tinhert_summary_report_view" model="ir.ui.view">
+        <field name="name">Petrofac Tinhert Timesheet Report</field>
+        <field name="model">petrofac.tinhert.summary.report</field>
+        <field name="arch" type="xml">
+        <form string="Report Options">
+            <group>
+                <field name="filter_by" required="1" widget="seletion"/>
+            </group>
+            <group col="4">
+                <field name="date_from" attrs="{'invisible':[('filter_by','!=','period')],'required':[('filter_by','=','period')]}"/>
+                <field name="date_to" attrs="{'invisible':[('filter_by','!=','period')],'required':[('filter_by','=','period')]}"/>
+                <field name="month_data" string="Month" placeholder="MM/YYYY " attrs="{'invisible':[('filter_by','!=','month')],'required':[('filter_by','=','month')]}"/>
+            </group>
+            <group>
+                <field name="project_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                <field name="service_no" required="1" widget="many2many_tags" options="{'no_create': True, 'no_open': True}"/>
+                <field name="vendor_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                <!-- byme
+                <field name="vendor_id" required="1" options="{'no_create': True, 'no_open': True}" domain="[('supplier','=',True)]"/> -->
+                <field name="inspector_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+            </group>
+            <group>
+                <field name="file" filename="file_name"/>
+                <field name="file_name" invisible="1"/>
+            </group>
+            <footer>
+                 
+                <button name="generate_report_excel" string="Print Excel" type="object" default_focus="1" class="oe_highlight"/>
+                or 
+                <button string="Cancel" class="oe_link" special="cancel" />
+            </footer>
+        </form>
+        </field>
+    </record>
+
+    <record id="action_petrofac_tinhert_summary_report_menu" model="ir.actions.act_window">
+        <field name="name">Petrofac Tinhert Timesheet Report</field>
+        <field name="res_model">petrofac.tinhert.summary.report</field>
+         <!-- byme
+        <field name="view_type">form</field> -->
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="petrofac_tinhert_summary_report_view"/>
+        <field name="target">new</field>
+    </record>
+    
+    
+    <!-- <menuitem id="menu_petrofac_tinhert_report" name="Petrofac Tinhert" action="action_petrofac_tinhert_summary_report_menu" parent="prime4_report.menu_timesheet_summary_report_main" sequence="4"/> -->
+    
+    
+    <!--pdf report-->
+    
+   
+  
+    
+</odoo>
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="activity_description_tree_view" model="ir.ui.view">
+        <field name="name">activity.description.tree.view</field>
+        <field name="model">activity.description</field>
+        <field name="arch" type="xml">
+             <list>
+                <field name="name"/>
+                <field name="activity_code"/>
+            </list>
+        </field>
+    </record>
+    <!-- For Activity Description Master Menu -->
+    <record id="action_activity_description" model="ir.actions.act_window">
+        <field name="context">{}</field>
+        <field name="name">Activity Description</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">activity.description</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id='activity_description_menu' name="Activity Description" action="action_activity_description" parent="project.menu_project_config" />
+
+</odoo>

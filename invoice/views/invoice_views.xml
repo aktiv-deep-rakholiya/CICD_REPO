@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem name="SA Bills"
+        id="account.menu_finance"
+        groups="account.group_account_readonly,account.group_account_invoice"
+        sequence="55"/>
+
+    <record id="action_update_client_details" model="ir.actions.server">
+        <field name="name">Update Client Details</field>
+        <field name="model_id" ref="invoice.model_invoice"/>
+        <field name="binding_model_id" ref="invoice.model_invoice"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">records=records.update_client_details()</field>
+    </record>
+
+    <record id="invoice_tree_view" model="ir.ui.view">
+        <field name="name">Invoice.tree</field>
+        <field name="model">invoice</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="invoice_no1" string='Invoice No' optional="show"/>
+                <field name="client_name" string='Client' optional="show"/>
+                <field name="currency" string='Currency' optional="show"/>
+                <field name="project_id" string='Project' optional="show"/>
+                <field name="inv_date" string='Invoice Date' optional="show"/>
+                <field name="amount_tax" string="Tax Included" optional="show"/>
+                <field name="amount_total" string="Total" optional="show"/>
+                <field name="status" string="Invoice Status" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="invoice_form_view" model="ir.ui.view">
+        <field name="name">Invoice</field>
+        <field name="model">invoice</field>
+        <field name="arch" type="xml">
+            <form create="0">
+                <header>
+                    <button class="oe_highlight" string="CONFIRM" type="object" name="confirm_statusbar"
+                            invisible="status != 'draft'"/>
+                    <button class="btn btn-default" string="RESET TO DRAFT" type="object" name="reset_statusbar"
+                            invisible="status != 'cancel'"/>
+                    <button class="btn btn-default" string="CANCEL" type="object" name="cancel_statusbar"
+                            invisible="status == 'cancel'"/>
+
+                    <field name="status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <label for="invoice_no1" string="Client Invoice"/>
+                        </h1>
+                        <h2>
+                            <field name="invoice_no1" readonly="1" force_save="1"
+                                   invisible="status == 'draft'"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="vat_code" string="Vat Code" invisible="1"/>
+                            <field name="tel_num" string="Tel Num" invisible="1"/>
+                            <field name="fax" string="Fax" invisible="1"/>
+                            <field name="attn" string="Attn" invisible="1"/>
+                            <field name="trn" string="TRN" invisible="1"/>
+                            <field name="purchase_date" invisible="1"/>
+                            <field name="project_id" readonly="1" force_save="1" string='Project'/>
+                            <field name="client_name" string='Client name' invisible="1" force_save="1"
+                                   readonly="status != 'draft'"/>
+                            <field name="client_master_id"  readonly="1"  options='{"no_open": True, "no_create": True}'
+                                   required="1"/>
+                            <!--  address -->
+                            <label for="street_page_lead" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="street" readonly="1" id="street_page_lead" placeholder="Street..."
+                                       class="o_address_street"
+                                       force_save="1"/>
+                                <field name="street2" readonly="1" placeholder="Street 2..." class="o_address_street"
+                                        force_save="1"/>
+                                <field name="city" readonly="1" placeholder="City" class="o_address_city"
+                                        force_save="1"/>
+                                <field name="state_id" readonly="1" class="o_address_state" placeholder="State"
+                                       options='{"no_open": True}'
+                                       force_save="1"/>
+                                <field name="zip" readonly="1" placeholder="ZIP" class="o_address_zip"
+                                        force_save="1"/>
+                                <field name="country_id" readonly="1" placeholder="Country" class="o_address_country"
+                                       options='{"no_open": True, "no_create": True}' force_save="1"/>
+                            </div>
+
+                        </group>
+                        <group>
+                            <field name="inv_date" string='Invoice Date'
+                                   readonly="status != 'draft'"/>
+                            <field name="price_list" string="Price List" options='{"no_open": True, "no_create": True}'
+                                   readonly="status != 'draft'" force_save="1"/>
+                            <field name="pay_term" options='{"no_open": True, "no_create": True}' string="Payment Term"
+                                   readonly="status != 'draft'" force_save="1"/>
+                            <field name="purchase_id" invisible="1" string='Purchase Order No'
+                                   readonly="status != 'draft'"/>
+                            <field name="currency" required="1" string="Currency"
+                                   readonly="status != 'draft'" force_save="1"/>
+                            <field name="aed_currency" string="AED Currency" readonly="status != 'draft'" force_save="1"/>
+                            <field name="is_tax_visible" invisible="1"/>
+                            <field name="client_id" invisible="1" string="Client Details"
+                                   readonly="status != 'draft'" force_save="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Invoice Lines">
+                            <field name="invoice_no" readonly="status != 'draft'" force_save="1">
+                                <list editable="bottom">
+                                    <field name="summar_report_line_id" optional="hide"/>
+                                    <field name="calendar_ids" widget="many2many_tags" optional="hide"/>
+                                    <field name="partner_ids" widget="many2many_tags" optional="hide"/>
+                                    <field name="purchase_id" optional="hide"/>
+                                    <field name="inv_note" column_invisible="1"/>
+                                    <field name="country" string="Country" optional="show"/>
+                                    <field name="employee_role" string="Role" optional="show"/>
+                                    <field name="client_name1" column_invisible="1" force_save="1"/>
+                                    <field name="cat_location" string="Location" optional="show"
+                                           column_invisible="parent.client_name != 'tcm'"/>
+                                    <field name="services" string="Services" optional="show"
+                                           column_invisible="parent.client_name != 'tcm'"/>
+                                    <field name="category_expenses" string="JOB Duration" optional="show"
+                                           column_invisible="parent.client_name != 'tcm'"/>
+                                    <field name="inspection_coordinator" string="Inspector" optional="show"/>
+                                    <field name="days" string="Days" optional="show"/>
+                                    <field name="per_day_rate" string="Per Day Rate" optional="show"/>
+                                    <field name="add_expenses" string="AdditionalExp" optional="show"/>
+                                    <field name="stay" optional="show"/>
+                                    <field name="amount" string="Amount" optional="show"/>
+                                    <field name="tax_id" widget="many2many_tags" optional="show"
+                                           column_invisible="not parent.is_tax_visible"/>
+                                    <field name="price_tax" string="Tax" optional="hide"/>
+                                    <field name="total" string="Total" optional="show"/>
+                                </list>
+
+                                <form readonly="1">
+                                    <group>
+                                        <group>
+                                            <field name="summar_report_line_id" invisible="1"/>
+                                            <field name="inv_note" invisible="1"/>
+                                            <field name="country" string="Country" readonly="1"/>
+                                            <field name="employee_role" string="Role" readonly="1"/>
+                                            <field name="cat_location" string="Location" readonly="1"/>
+                                            <field name="services" string="Services" readonly="1"/>
+                                            <field name="category_expenses" string="JOB Duration" readonly="1"/>
+                                            <field name="stay" optional="show"/>
+                                            <field name="inspection_coordinator" string="Inspector" readonly="1"/>
+                                            <field name="days" string="Days" readonly="1"/>
+                                        </group>
+                                        <group>
+                                            <field name="per_day_rate" string="Per Day Rate" readonly="1"/>
+                                            <field name="add_expenses" string="AdditionalExp" readonly="1"/>
+                                            <field name="amount" string="Amount" readonly="1"/>
+                                            <field name="tax_id" widget="many2many_tags" readonly="1"/>
+                                            <field name="total" string="Total" readonly="1"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                            <group>
+                                <div class="d-flex justify-content-end w-100">
+                                    <group class="oe_subtotal_footer" name="invoice_total">
+                                        <field name="amount_untaxed"/>
+                                        <field name="amount_tax"/>
+                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                            <label for="amount_total"/>
+                                        </div>
+                                        <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator"/>
+                                    </group>
+                                    <div class="oe_clear"/>
+                                </div>
+                            </group>
+
+                        </page>
+                        <page string="Other Info">
+                            <group>
+                                <group>
+                                    <field name="company_id" string="Company" readonly="1" force_save="1"/>
+                                </group>
+                                <group>
+                                 <field name="summary_report_id" force_save="1" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+</odoo>

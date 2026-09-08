@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_common_report" model="ir.ui.view">
+        <field name="name">common.report</field>
+        <field name="model">common.report</field>
+        <field name="arch" type="xml">
+            <form string="Report Options">
+
+                <group>
+                    <field name="filter_by" invisible="1"/>
+                    <field name="date_from" invisible="filter_by != 'period'" required="filter_by == 'period'"/>
+                    <field name="date_to" invisible="filter_by != 'period'" required="filter_by == 'period'"/>
+                    <field name="month_data" invisible="filter_by != 'month'" required="filter_by == 'month'" placeholder="MM/YYYY"/>
+
+                    <field name="project_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="vendor_id" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="inspector_id" options="{'no_create': True, 'no_open': True}"/>
+
+                    <field name="file" filename="file_name"/>
+                    <field name="file_name" invisible="1"/>
+                </group>
+
+                <footer>
+                    <button name="generate_report_excel"
+                            string="Print Excel" type="object"
+                            class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+
+            </form>
+        </field>
+    </record>
+
+</odoo>

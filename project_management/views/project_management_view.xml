@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="project_management_view_form" model="ir.ui.view">
+        <field name="name">project.management.view.form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page" position="after">
+                <page name="planning" string="Project Planning">
+                    <group>
+                        <group>
+                            <field name="planned_start_date"/>
+                            <field name="planned_end_date"/>
+                        </group>
+                        <group>
+                            <field name="actual_start_date"/>
+                            <field name="actual_end_date"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//form/sheet/notebook/page[@name='planning']" position="before">
+                <page name="details" string="Project Details">
+                    <group>
+                        <group>
+                            <field name="material_description"/>
+                            <field name="doc_number"/>
+                            <field name="tcm_job"/>
+                            <field name="material_requisition_no"/>
+                            <field name="expediting_date"/>
+                            <field name="next_expediting_date"/>
+                        </group>
+                        <group>
+                            <field name="vendor_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0,
+                            'search_default_is_company':1, 'default_is_company':1}"/>
+
+                            <field name="purchase_id"/>
+                            <field name="expediting_contract_no"/>
+                            <field name="inspection_contract_no"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <field name="name" position="before">
+                <field name="project_id" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
+          

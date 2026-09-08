@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+ace_plantech_summary_report,ace.plantech.summary.report,model_ace_plantech_summary_report,,1,1,1,1
+applus_summary_report,applus.summary.report,model_applus_summary_report,,1,1,1,1
+eneico_summary_report,eneico.summary.report,model_eneico_summary_report,,1,1,1,1
+global_scs_summary_report,global.scs.summary.report,model_global_scs_summary_report,,1,1,1,1
+neil_barnett_summary_report,neil.barnett.summary.report,model_neil_barnett_summary_report,,1,1,1,1
+petrofac_bureau_summary_report,petrofac.bureau.summary.report,model_petrofac_bureau_summary_report,,1,1,1,1
+enzone_summary_report,enzone.summary.report,model_enzone_summary_report,,1,1,1,1
+petrofac_turk_summary_report,petrofac.turk.summary.report,model_petrofac_turk_summary_report,,1,1,1,1

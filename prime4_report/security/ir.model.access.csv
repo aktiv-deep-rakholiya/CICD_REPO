@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+timesheet_summary_report,timesheet.summary.report,model_timesheet_summary_report,,1,1,1,1
+visit_summary_report,visit.summary.report,model_visit_summary_report,,1,1,1,1
+visit_summary_report2,visit.summary.report2,model_visit_summary_report2,,1,1,1,1
+general_timesheet_report,general.timesheet.report,model_general_timesheet_report,,1,1,1,1
+monarch_style_report,monarch.style.report,model_monarch_style_report,,1,1,1,1
+tecnicas_reunidas_summary_report,tecnicas.reunidas.summary.report,model_tecnicas_reunidas_summary_report,,1,1,1,1
+tecnicas_reunidas_bapco_summary_report,tecnicas.reunidas.bapco.summary.report,model_tecnicas_reunidas_bapco_summary_report,,1,1,1,1

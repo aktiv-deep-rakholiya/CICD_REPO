@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="timesheet_view" model="ir.ui.view">
+        <field name="name">Timesheet Report</field>
+        <field name="model">timesheet.report</field>
+        <field name="arch" type="xml">
+        <form string="Report Options">
+            <group>
+                <field name="filter_by" required="1" widget="selection"/>
+            </group>
+            <group>
+                <field name="date_from" invisible="filter_by != 'period'" required="filter_by == 'period'"/>
+                <field name="date_to" invisible="filter_by != 'period'" required="filter_by == 'period'"/>
+                <field name="month_data" string="Month" placeholder="MM/YYYY " invisible="filter_by != 'month'" required="filter_by == 'month'"/>
+            </group>
+            <group>
+                <field name="project_id"  options="{'no_create': True, 'no_open': True,'no_create_edit':True} "/>
+                <field name="inspector_idd"  options="{'no_create': True, 'no_open': True}"/>
+                <field name="client_id" options="{'no_create': True, 'no_open': True}"/>
+            </group>
+            <footer>
+
+                <button name="submit_btn" string="Open" type="object" class="oe_highlight"/>
+                or
+                <button string="Cancel" class="oe_link" special="cancel" />
+            </footer>
+        </form>
+        </field>
+    </record>
+    <record id="action_timesheet" model="ir.actions.act_window">
+        <field name="name"> Generate Timesheet Report</field>
+        <field name="res_model">timesheet.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="timesheet_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_timesheet_summary" name="Timesheet" parent="invoice.menu_invoice" sequence="3"
+              groups="base.group_system,project_management.accounts_role"/>
+    <menuitem id="menu_timesheet_report_1" name="Timesheet-Submission" action="action_timesheet" sequence="1"
+              parent="menu_timesheet_summary" groups="base.group_system,project_management.accounts_role"/>
+
+</odoo>

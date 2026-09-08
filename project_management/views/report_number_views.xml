@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_number_master_view" model="ir.ui.view">
+        <field name="name">report.number.tree</field>
+        <field name="model">report.number</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="report_number_master_form_view" model="ir.ui.view">
+        <field name="name">report.number.form</field>
+        <field name="model">report.number</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+
+                        <group>
+                            <field name="visible" />
+                            <field name="company_id" invisible="1" options='{"no_open": True, "no_create": True}'/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_report_number_master" model="ir.actions.act_window">
+        <field name="name">Report Number Master</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">report.number</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem id="master_root_menu" action="action_client_master" name="Master"/>
+
+    <menuitem id="client_master_menu" parent="master_root_menu" sequence="1"
+              action="action_client_master" name="Client"/>
+
+    <menuitem id="menu_inspector_name" name="Inspector" parent="master_root_menu"
+            action="action_inspector_name" sequence="2" />
+
+    <menuitem id="menu_pricelist_master" name="PriceList" sequence="3"
+              action="action_pricelist_master" parent="master_root_menu" />
+
+    <menuitem id="menu_report_master" name="Report Number" sequence="4"
+              action="action_report_number_master" parent="master_root_menu"  />
+
+</odoo>

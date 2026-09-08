@@ -1,0 +1,79 @@
+
+/*  1. Remove ALL nowrap restrictions */
+.fc .fc-daygrid-event,
+.fc .fc-event-title,
+.fc .o_event_title,
+.fc .fc-event-main {
+    white-space: normal !important;
+    word-break: break-word !important;
+}
+
+/*  2. Remove FullCalendar min-height restriction */
+.fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+    min-height: auto !important;
+}
+
+/*  3. Disable JS absolute positioning system */
+.fc-daygrid-event-harness,
+.fc-daygrid-event-harness-abs {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    margin-top: 2px !important;
+}
+
+/*  4. Reset event stacking to normal flow */
+.fc-daygrid-day-events {
+    display: block !important;
+    position: static !important;
+}
+
+/*  5. Remove ALL height restrictions */
+.fc-daygrid-day-frame,
+.fc-daygrid-day-events,
+.fc-daygrid-event,
+.fc-daygrid-event * {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+/*  6. Event container fix */
+.fc-daygrid-event.fc-h-event {
+    display: block !important;
+    padding: 2px 4px !important;
+}
+
+/*  7. Main wrapper fix */
+.fc-daygrid-event .fc-event-main,
+.fc-daygrid-event .fc-event-main-frame {
+    display: block !important;
+    width: 100% !important;
+}
+
+/*  8. Title (MAIN WRAP FIX) */
+.fc-daygrid-event .fc-event-title,
+.fc-daygrid-event .o_event_title {
+    display: block !important;
+    width: 100% !important;
+}
+
+/*  9. Inner span fix */
+.fc-daygrid-event span {
+    white-space: normal !important;
+    word-break: break-word !important;
+}
+
+/*  10. Prevent any clipping from parent */
+.fc-daygrid-day-frame {
+    overflow: visible !important;
+    padding-bottom: 20px;
+}
+
+/*  11. Disable balanced layout interference */
+.fc .fc-daygrid-body-balanced .fc-daygrid-day-events {
+    position: static !important;
+}
+

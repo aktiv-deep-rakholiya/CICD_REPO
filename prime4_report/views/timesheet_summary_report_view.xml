@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="timesheet_summary_report_view" model="ir.ui.view">
+        <field name="name">Summary of Timesheet</field>
+        <field name="model">timesheet.summary.report</field>
+        <field name="inherit_id" ref="project_management.view_common_report"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='filter_by']" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='project_id']" position="attributes">
+                <attribute name="required">0</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='vendor_id']" position="after">
+                <field name="location_id" options="{'no_create': True, 'no_open': True}"/>
+            </xpath>
+        </field>
+
+    </record>
+
+    <record id="action_timesheet_summary_report_menu" model="ir.actions.act_window">
+        <field name="name">Summary of Timesheet</field>
+        <field name="res_model">timesheet.summary.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="timesheet_summary_report_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_timesheet_summary_report_main" name="Timesheet" parent="project_management.menu_timesheet_summary_main_root" sequence="2"/>
+    <menuitem id="menu_timesheet_summary_report_main2" name="Summary of Timesheet" parent="project_management.menu_timesheet_summary_main_root" sequence="3"/>
+    <menuitem id="menu_timesheet_summary_report" name="Summary of Timesheet" action="action_timesheet_summary_report_menu" parent="menu_timesheet_summary_report_main2" sequence="1"/>
+
+</odoo>
+

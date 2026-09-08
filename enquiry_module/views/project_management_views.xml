@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="project_edit_view_order_form" model="ir.ui.view">
+        <field name="name">Project Description</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]" position="before">
+                <field name="proj_code" placeholder="Project Code"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_title')]" position="after">
+                <group>
+                    <field name="description" placeholder="Add a description"/>
+                    <field name="client_name" string='Client' invisible="1"/>
+                    <label for="street_page_lead" string="Address"/>
+                    <div class="o_address_format">
+                        <field name="street" id="street_page_lead" placeholder="Street..." class="o_address_street"/>
+                        <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                        <field name="city" placeholder="City" class="o_address_city"/>
+                        <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="country_id" placeholder="Country" class="o_address_country"
+                               options='{"no_open": True, "no_create": True}'/>
+                    </div>
+                    <field name="vat_code" placeholder="Vat Code"/>
+                    <field name="tel_num" placeholder="Tel Num"/>
+                    <field name="fax" placeholder="Fax"/>
+                    <field name="attn" placeholder="Attn"/>
+                    <field name="trn" placeholder="TRN"/>
+                    <field name="price_list" placeholder="Price List"/>
+                    <field name="pay_term" placeholder="Payment Term"/>
+                    <field name="currency" placeholder="Currency"/>
+                    <field name="tax_id" placeholder="Tax" widget="many2many_tags"/>
+                </group>
+            </xpath>
+            <xpath expr="/form/sheet/notebook/page[@name='description']" position="attributes">
+                <attribute name='invisible'>1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_view_order_form" model="ir.ui.view">
+        <field name="name">Project Description</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]" position="replace">
+                <group>
+                    <field name="name" class="o_project_name" placeholder="e.g. Office Party"/>
+                </group>
+            </xpath>
+            <field name="name" position="before">
+                <field name="proj_code"/>
+            </field>
+            <field name="name" position="after">
+                <group>
+                    <field name="description" placeholder="Add a description"/>
+                    <field name="client_id" string='Client'/>
+                    <field name="client_name" string='Client' invisible="1"/>
+                    <label for="street_page_lead" string="Address"/>
+                    <div class="o_address_format">
+                        <field name="street" id="street_page_lead" placeholder="Street..." class="o_address_street"/>
+                        <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                        <field name="city" placeholder="City" class="o_address_city"/>
+                        <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="country_id" placeholder="Country" class="o_address_country"
+                               options='{"no_open": True, "no_create": True}'/>
+                    </div>
+                    <field name="vat_code" string="Vat Code"/>
+                    <field name="tel_num" string="Tel Num"/>
+                    <field name="fax" string="Fax"/>
+                    <field name="attn" string="Attn"/>
+                    <field name="trn" string="TRN"/>
+                    <field name="price_list" string="Price List"/>
+                    <field name="pay_term" string="Payment Term"/>
+                    <field name="currency" string="Currency"/>
+                    <field name="tax_id" string="Tax" widget="many2many_tags"/>
+                </group>
+            </field>
+        </field>
+    </record>
+
+</odoo>

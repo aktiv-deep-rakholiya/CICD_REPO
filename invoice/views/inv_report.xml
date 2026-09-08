@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="invoice_report_paperformat" model="report.paperformat">
+            <field name="name">Invoice Report paper format</field>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">93</field>
+            <field name="margin_bottom">40</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_spacing">95</field>
+            <field name="dpi">105</field>
+        </record>
+
+        <record id="invoice_report_paperformat_aed" model="report.paperformat">
+            <field name="name">Invoice Report paper format AED</field>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="margin_top">93</field>
+            <field name="margin_bottom">40</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_spacing">97</field>
+            <field name="dpi">95</field>
+        </record>
+
+        <record id="action_report_invoice" model="ir.actions.report">
+            <field name="name">Print Invoice</field>
+            <field name="model">invoice</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">invoice.report_invoice_prime</field>
+            <field name="report_file">invoice.report_invoice_prime</field>
+            <field name="binding_model_id" ref="model_invoice"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="invoice.invoice_report_paperformat"/>
+        </record>
+
+        <record id="action_report_invoice_aed" model="ir.actions.report">
+            <field name="name">Print Tax Invoice</field>
+            <field name="model">invoice</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">invoice.report_invoice_prime_aed</field>
+            <field name="report_file">invoice.report_invoice_prime_aed</field>
+            <field name="binding_model_id" ref="model_invoice"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="invoice.invoice_report_paperformat_aed"/>
+        </record>
+
+    </data>
+</odoo>

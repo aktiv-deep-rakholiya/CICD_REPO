@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_inspector_name_tree" model="ir.ui.view">
+        <field name="name">inspector.name.tree</field>
+        <field name="model">inspector.name</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="ins_name"/>
+                <field name="per_day_rate" column_invisible="1"/>
+                <field name="per_day_month" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_inspector_name_form" model="ir.ui.view">
+        <field name="name">inspector.name.form</field>
+        <field name="model">inspector.name</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="ins_name"/>
+                        <field name="per_day_rate" invisible="1"/>
+                        <field name="per_day_month" invisible="1"/>
+                        <field name="employee_signature" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_inspector_name">
+        <field name="name">Inspector Names</field>
+        <field name="res_model">inspector.name</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_inspector_name_tree"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click here to add new Inspector Names.
+            </p>
+        </field>
+    </record>
+</odoo>

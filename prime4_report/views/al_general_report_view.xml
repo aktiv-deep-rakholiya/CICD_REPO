@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="general_timesheet_wizard_report_view" model="ir.ui.view">
+        <field name="name">Timesheet Report</field>
+        <field name="model">general.timesheet.report</field>
+        <field name="inherit_id" ref="project_management.view_common_report"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='inspector_id']" position="after">
+                <field name="location_id" invisible="context.get('equa_srl',False)" options="{'no_create': True, 'no_open': True}"/>
+            </xpath>
+            <xpath expr="//footer" position="replace">
+                <footer>
+
+                    <button name="generate_report_excel" string="Print Excel" type="object" default_focus="1" class="oe_highlight" invisible="context.get('spx_flow',False)"/>
+                    <button name="generate_report_excel_spx_flow" string="Print Excel" type="object" class="oe_highlight" invisible=" context.get('equa_srl',False)"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="action_timesheet_general_report_menu" model="ir.actions.act_window">
+        <field name="name">Timesheet Report Equa Srl</field>
+        <field name="res_model">general.timesheet.report</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'equa_srl':True}</field>
+        <field name="view_id" ref="general_timesheet_wizard_report_view"/>
+        <field name="target">new</field>
+    </record>
+    <record id="action_timesheet_general_report_menu_spx" model="ir.actions.act_window">
+        <field name="name">Timesheet Report Dolinger Fertilisation Limited</field>
+        <field name="res_model">general.timesheet.report</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'spx_flow':True}</field>
+        <field name="view_id" ref="general_timesheet_wizard_report_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_general_timesheet_report_equasrl" name="Equa SRL" action="action_timesheet_general_report_menu" parent="menu_timesheet_summary_report_main" sequence="10"/>
+    <menuitem id="menu_general_timesheet_report_spx_flow" name="Dollinger Filtration Limited" action="action_timesheet_general_report_menu_spx" parent="menu_timesheet_summary_report_main" sequence="10"/>
+
+</odoo>

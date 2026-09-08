@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="client_tree_view" model="ir.ui.view">
+        <field name="name">Client Details</field>
+        <field name="model">client.details</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="stamp_image" widget="image"/>
+                <field name="sign_image" widget="image"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="client_form_view" model="ir.ui.view">
+        <field name="name">Client Details Form</field>
+        <field name="model">client.details</field>
+        <field name="arch" type="xml">
+            <form string="Client Details">
+                <group>
+                    <field name="name" required="1"/>
+                    <field name="stamp_image" widget="image"/>
+                    <field name="sign_image" widget="image"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_client_details_view" model="ir.actions.act_window">
+        <field name="name">Client Details</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">client.details</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem id="menu_client_details_view" name="Client Info" action="action_client_details_view"
+              parent="project_petrofac.menu_configuration_main_menu" groups="base.group_no_one"/>
+
+</odoo>

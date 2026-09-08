@@ -1,0 +1,745 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <template id="report_invoice_prime_aed">
+            <t t-call="web.basic_layout">
+                <div class="header">
+                    <table width="100%" cellpadding="4" cellspacing="0" style="border: none !important; border-collapse: separate !important; border-spacing: 0 !important;">
+                        <t t-foreach="docs" t-as="o">
+                            <tr>
+                                <td colspan="2" width="760" valign="top" style="border: none; padding: 0in">
+                                    <img class="img" src="/project_management/static/src/img/prime4.png" align="left"
+                                         width="100%" height="30%"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" width="760" valign="top" style="border: none; padding: 0in">
+                                    <h2 style="font-family: Arial;font-size:16px" align="center">
+                                        <u>
+                                            <strong>TAX INVOICE</strong>
+                                        </u>
+                                        <br></br>
+                                        <strong style="font-size:14px;font-family: Arial;margin-bottom: 5px;">
+                                            TRN:100246536500003
+                                        </strong>
+                                    </h2>
+                                </td>
+                            </tr>
+
+                            <tr valign="top">
+                                <td width="53%" style="font-size:14px;border: none; padding: 0in">
+                                    <strong>
+                                        <span t-field="o.client_master_id.name"/>
+                                    </strong>
+                                </td>
+                                <td width="47%" style="border: none; font-size: 14px; padding: 0in">
+                                    Invoice No:
+                                    <span t-field="o.invoice_no1"/>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td width="52%" style="border: none; font-size: 14px; padding: 0in">
+                                    <t t-if="o.client_master_id.street">
+                                        <span t-field="o.client_master_id.street"/>,
+                                    </t>
+                                </td>
+                                <td width="48%" style="border: none; font-size: 14px; padding: 0in">
+                                    Invoice Date:
+                                    <span t-esc="o.get_date_inv()"/>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td width="52%" style="border: none; font-size: 14px;padding: 0in">
+                                    <t t-if="o.street2">
+                                        <span t-field="o.client_master_id.street2"/>
+                                    </t>
+                                </td>
+                                <td width="48%" style="border: none; font-size: 14px;padding: 0in">
+                                    Terms of Payment:
+                                    <span t-field="o.pay_term.name"/>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td width="50%" style="border: none;font-size: 14px; padding: 0in">
+                                    <t t-if="o.client_master_id.city">
+                                        <span t-field="o.client_master_id.city"/>,
+                                    </t>
+                                </td>
+                                <td width="50%" style="border: none; padding: 0in"/>
+                            </tr>
+                            <tr valign="top">
+                                <t t-if="o.client_master_id.state_id">
+                                    <td width="50%" style="border: none;font-size: 14px; padding: 0in">
+                                        <span t-field="o.client_master_id.state_id.name"/>
+                                        -
+                                    </td>
+                                </t>
+                                <t t-if="o.client_master_id.zip">
+                                    <td width="50%" style="border: none; font-size: 14px;padding: 0in">
+                                        <span t-field="o.client_master_id.zip"/>,
+                                    </td>
+                                </t>
+                            </tr>
+                            <tr valign="top">
+                                <td width="50%" style="border: none; font-size: 14px;padding: 0in">
+                                    <t t-if="o.client_master_id.country_id">
+                                        <span t-field="o.client_master_id.country_id.name"/>
+                                    </t>
+                                </td>
+                                <td width="50%" style="border: none; font-size: 14px;padding: 0in"/>
+                            </tr>
+                            <tr valign="top">
+                               <t t-if="o.client_master_id.client_name == 'tcm'">
+                                   <td width="50%" style="border: none;font-size: 14px; padding: 0in;">
+                                   VAT: <span t-field="o.client_master_id.vat_code"/></td>
+                               </t>
+                               <t t-if="o.client_master_id.client_name != 'tcm'">
+                                   <td width="50%" style="border: none;font-size: 14px; padding: 0in;height: 25px;">&#160;</td>
+                               </t>
+                               <td width="50%" style="border: none;font-size: 14px; padding: 0in;"/>
+                           </tr>
+                            <tr valign="top">
+                                <td width="50%" style="border: none;font-size: 14px; padding: 0in">Tel:
+                                    <span t-field="o.client_master_id.mobile"/>
+                                </td>
+                                <td width="50%" style="border: none;font-size: 14px; padding: 0in"/>
+                            </tr>
+                            <tr valign="top">
+                                <td width="50%" style="border: none;font-size: 14px; padding: 0in">Fax:
+                                    <span t-field="o.client_master_id.fax"/>
+                                </td>
+                                <td width="50%" style="border: none;font-size: 14px; padding: 0in"/>
+                            </tr>
+                            <tr valign="top">
+                                <td width="50%" style="border: none;font-size: 14px; padding: 0in">Attn:
+                                    <span t-field="o.client_master_id.attn"/>
+                                </td>
+                                <td width="50%" style="border: none; font-size: 14px;padding: 0in"/>
+                            </tr>
+                            <tr valign="top">
+                                <td width="50%" style="border: none;font-size: 14px; padding: 0in">TRN:
+                                    <span t-field="o.client_master_id.trn"/>
+                                </td>
+                                <td width="50%" style="border: none; font-size: 14px;padding: 0in"/>
+                            </tr>
+                            <t t-if="not o.client_master_id.city">
+                                <tr valign="top">
+                                    <td width="50%" style="border:none; padding:0in;height:23px;">&#160;</td>
+                                    <td width="50%" style="border:none; padding:0in">&#160;</td>
+                                </tr>
+                            </t>
+                            <t t-if="not o.client_master_id.country_id">
+                                <tr valign="top">
+                                    <td width="50%" style="border:none; padding:0in;height:23px;">&#160;</td>
+                                    <td width="50%" style="border:none; padding:0in">&#160;</td>
+                                </tr>
+                            </t>
+                            <t t-if="not o.client_master_id.state_id and not o.client_master_id.zip">
+                                <tr valign="top">
+                                    <td width="50%" style="border:none; padding:0in;height:23px;">&#160;</td>
+                                    <td width="50%" style="border:none; padding:0in">&#160;</td>
+                                </tr>
+                            </t>
+                        </t>
+                    </table>
+                </div>
+                <div class="footer" style="text-align: right;font-size:14px;">
+                    <span>Page:<span class="page"/>/
+                        <span class="topage"/>
+                    </span>
+                    <img class="img" src="/project_management/static/src/img/rsz_p4_footer1.png" align="left"
+                         width="100%"/>
+                </div>
+                <div class="page">
+                    <t t-foreach="docs" t-as="o">
+                        <table style="font-family: Arial;font-size:14px;" width="100%">
+                            <thead>
+                                <tr valign="bottom">
+                                    <td width="441"
+                                        style="border: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0.1cm; padding-right: 0cm; font-weight: bold; text-align: center; background-color: lightgray;">
+                                        <p>
+                                            Details
+                                        </p>
+                                    </td>
+                                    <td width="80"
+                                        style="border: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0.1cm; padding-right: 0cm; font-weight: bold; text-align: center; background-color: lightgray;">
+                                        <p>
+                                            Amount
+                                            <br/>
+                                            Before VAT.
+                                            <br/>
+                                            (<span style="font-weight: bold;" t-field="docs.currency.symbol"/>)
+                                        </p>
+                                    </td>
+                                    <td width="80"
+                                        style="border: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0.1cm; padding-right: 0cm; font-weight: bold; text-align: center; background-color: lightgray;">
+                                        <p>
+                                            5% VAT
+                                            <br/>
+                                            Amount
+                                            <br/>
+                                            (<span style="font-weight: bold;" t-field="docs.currency.symbol"/>)
+                                        </p>
+                                    </td>
+                                    <t t-if="o.currency.name != 'AED'">
+                                        <td width="80"
+                                            style="border: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0.1cm; padding-right: 0cm; font-weight: bold; text-align: center; background-color: lightgray;">
+                                            <p>
+                                                Amount<br/>Incl. VAT
+                                                <br/>
+                                                (<span style="font-weight: bold;" t-field="docs.currency.symbol"/>)
+                                            </p>
+                                        </td>
+                                        <td width="80"
+                                            style="border: 1px solid #000000; padding-right: 0.1cm; font-weight: bold; text-align: right; background-color: lightgray;">
+                                            <p>
+                                                Amount<br/>Incl. VAT<br/>(AED)
+                                            </p>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td width="80"
+                                            style="border: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0cm; font-weight: bold; text-align: center; background-color: lightgray;">
+                                            <p>
+                                                Amount<br/>Incl. VAT
+                                                <br/>
+                                                (<span style="font-weight: bold;" t-field="docs.currency.symbol"/>)
+                                            </p>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr valign="bottom">
+                                    <td width="441"
+                                        style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0.1cm; padding-right: 0cm;padding-bottom:0cm;">
+                                        <br></br>
+                                        <p>
+                                            Fees to provide services of the following project:
+                                            <br/>
+                                            <t t-set="all_partner_ids" t-value="[]"/>
+                                            <t t-foreach="o.invoice_no" t-as="line">
+                                                <t t-set="all_partner_ids"
+                                                   t-value="all_partner_ids + list(line.partner_ids)"/>
+                                            </t>
+                                            <span t-esc="','.join(set(map(lambda x: x.name, all_partner_ids)))"/>
+                                            <br/>
+                                            As per PO/Contract No.
+                                            <t t-if="o.project_id.expediting_contract_no"><span
+                                                    t-field="o.project_id.expediting_contract_no"/>-
+                                            </t>
+                                            <t t-if="o.project_id.inspection_contract_no">
+                                                <span t-field="o.project_id.inspection_contract_no"/>
+                                            </t>
+
+                                            <span t-field="o.purchase_id"/>
+                                            -
+                                            <span t-field="o.project_id"/>
+                                            dtd
+                                            <span t-field="o.purchase_date" t-options="{'format': 'dd-MM-YYYY'}"/>
+                                            <br/>
+                                            From:
+                                            <span t-esc="o.get_date(0)"/>
+                                            To:
+                                            <span t-esc="o.get_date(1)"/>
+                                        </p>
+                                    </td>
+                                    <td width="80"
+                                        style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000;  padding-left: 0.1cm; padding-right: 0.1cm">
+                                        <p>
+                                            <br/>
+
+                                        </p>
+                                    </td>
+                                    <td width="80"
+                                        style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000;  padding-left: 0.1cm; padding-right: 0.1cm">
+                                        <br></br>
+                                        <p>
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="80"
+                                        style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000;  padding-left: 0.1cm; padding-right: 0.1cm">
+                                        <br></br>
+                                        <p>
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <t t-if="o.currency.name != 'AED'">
+                                        <td width="80"
+                                            style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000;  padding-left: 0.1cm; padding-right: 0.1cm">
+                                            <br></br>
+                                            <p>
+                                                <br/>
+                                            </p>
+                                        </td>
+                                    </t>
+                                </tr>
+                                <t t-set="counter" t-value="0"/>
+                                <t t-foreach="o.invoice_no" t-as="line">
+                                    <t t-set="counter" t-value="counter+1"/>
+                                    <tr>
+                                        <td width="441"
+                                            style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0.1cm; padding-right: 0cm; padding-top: 0.3cm; padding-bottom: 0.3cm">
+                                            <t t-if="line.employee_role">
+                                                <div style="margin:0; line-height:1; margin-right: 10px;font-weight: bold">Name of the
+
+                                                    <span t-esc="line['employee_role'].name"/>
+                                                    (<span style="text-transform:uppercase"
+                                                           t-esc="line['country'].name"/>):
+                                                    <span t-esc="line['inspection_coordinator']"/>
+                                                </div>
+                                            </t>
+                                        </td>
+                                        <td width="80"
+                                            style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm; padding-top: 0.3cm; padding-bottom: 0.3cm">
+                                        </td>
+                                        <td width="80"
+                                            style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm; padding-top: 0.3cm; padding-bottom: 0.3cm">
+                                        </td>
+                                        <td width="80"
+                                            style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm; padding-top: 0.3cm; padding-bottom: 0.3cm">
+                                        </td>
+                                        <t t-if="o.currency.name != 'AED'">
+                                            <td width="80"
+                                                style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm; padding-top: 0.3cm; padding-bottom: 0.3cm">
+                                            </td>
+                                        </t>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td width="441"
+                                            style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0.1cm; padding-right: 0cm">
+                                            <div>
+                                                No.of Day(s) Service Provided:
+                                                <span t-esc="line['days']"/>
+                                                Day(s) @ €<span t-esc="line['per_day_rate']"/>/Day(s)
+                                            </div>
+                                        </td>
+                                        <td width="80"
+                                            style="text-align:center;border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm">
+                                            <div>
+                                                <span style="font-weight: bold;" t-field="o.currency.symbol"/>
+                                                <span t-esc="line['amount']"/>
+                                            </div>
+                                        </td>
+                                        <td width="80"
+                                            style="text-align:center;border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm">
+                                            <div>
+                                                <span style="font-weight: bold;" t-field="o.currency.symbol"/>
+                                                <span t-esc="line['price_tax']"/>
+                                            </div>
+                                        </td>
+                                        <td width="80"
+                                            style="text-align:center;border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm">
+                                            <div>
+                                                <span style="font-weight: bold;" t-field="o.currency.symbol"/>
+                                                <span t-esc="line['total']"/>
+                                            </div>
+                                        </td>
+                                        <t t-if="o.currency.name != 'AED'">
+                                            <td width="80"
+                                                style="text-align:center;border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm">
+                                                <div style="text-align:right;">
+                                                    AED
+                                                    <t t-esc="round(o.aed_currency*line['total'],2)"/>
+                                                </div>
+                                            </td>
+                                        </t>
+                                    </tr>
+
+                                    <t t-if="line['stay'] &gt; 0">
+
+                                        <tr>
+                                            <td width="441"
+                                                style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none;  padding-left: 0.1cm; padding-right: 0cm; padding-top: 0.3cm; padding-bottom: 0.3cm">
+                                                <div style="margin:0; line-height:1; font-weight: bold;">
+                                                    Expenses - With Overnight -
+
+                                                    (<span style="text-transform:uppercase"
+                                                           t-esc="line['country'].name"/>):
+                                                    <span t-esc="line['inspection_coordinator']"/>
+                                                </div>
+                                            </td>
+                                            <td width="80"
+                                                style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm; padding-top: 0.3cm; padding-bottom: 0.3cm">
+                                            </td>
+                                            <td width="80"
+                                                style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm; padding-top: 0.3cm; padding-bottom: 0.3cm">
+                                            </td>
+                                            <td width="80"
+                                                style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm; padding-top: 0.3cm; padding-bottom: 0.3cm">
+                                            </td>
+                                            <t t-if="o.currency.name != 'AED'">
+                                                <td width="80"
+                                                    style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm; padding-top: 0.3cm; padding-bottom: 0.3cm">
+                                                </td>
+                                            </t>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="441"
+                                                style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0.1cm; padding-right: 0cm">
+                                                <div>
+                                                    No.of Day(s) Service Provided:
+                                                    <span t-esc="line['days']"/>
+                                                    Day(s) @ €<span t-esc="line['stay']"/>/Day(s)
+                                                </div>
+                                            </td>
+                                            <td width="80"
+                                                style="text-align:center;border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm">
+                                                <div>
+                                                    <span style="font-weight: bold;"
+                                                          t-field="o.currency.symbol"/>
+                                                    <span t-esc="line['amount']"/>
+                                                </div>
+                                            </td>
+                                            <td width="80"
+                                                style="text-align:center;border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm">
+                                                <div>
+                                                    <span style="font-weight: bold;"
+                                                          t-field="o.currency.symbol"/>
+                                                    <span t-esc="line['price_tax']"/>
+                                                </div>
+                                            </td>
+                                            <td width="80"
+                                                style="text-align:center;border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm">
+                                                <div>
+                                                    <span style="font-weight: bold;"
+                                                          t-field="o.currency.symbol"/>
+                                                    <span t-esc="line['total']"/>
+                                                </div>
+                                            </td>
+                                            <t t-if="o.currency.name != 'AED'">
+                                                <td width="80"
+                                                    style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm">
+                                                    <div style="text-align:right;">
+                                                        AED
+                                                        <t t-esc="round(o.aed_currency*line['total'],2)"/>
+                                                    </div>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </t>
+
+                                    <t t-if="line['add_expenses'] &gt;0">
+                                        <tr>
+                                            <td width="441"
+                                                style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none;  padding-left: 0.1cm; padding-right: 0cm; padding-top: 0.3cm; padding-bottom: 0.3cm">
+                                                <div style="margin:0; line-height:1; font-weight: bold;">
+                                                    Expenses - Without Overnight -
+
+                                                    (<span style="text-transform:uppercase"
+                                                           t-esc="line['country'].name"/>):
+                                                    <span t-esc="line['inspection_coordinator']"/>
+                                                </div>
+                                            </td>
+                                            <td width="80"
+                                                style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm; padding-top: 0.3cm; padding-bottom: 0.3cm">
+                                            </td>
+                                            <td width="80"
+                                                style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm; padding-top: 0.3cm; padding-bottom: 0.3cm">
+                                            </td>
+                                            <td width="80"
+                                                style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm; padding-top: 0.3cm; padding-bottom: 0.3cm">
+                                            </td>
+                                            <t t-if="o.currency.name != 'AED'">
+                                                <td width="80"
+                                                    style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm; padding-top: 0.3cm; padding-bottom: 0.3cm">
+                                                </td>
+                                            </t>
+                                        </tr>
+
+                                        <tr>
+                                            <td width="441"
+                                                style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0.1cm; padding-right: 0cm">
+                                                <div>
+                                                    No.of Day(s) Service Provided:
+                                                    Additional Expenses
+                                                </div>
+                                            </td>
+                                            <td width="80"
+                                                style="text-align:center;border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm">
+                                                <div>
+                                                    <span style="font-weight: bold;"
+                                                          t-field="o.currency.symbol"/>
+                                                    <span t-esc="line['amount']"/>
+
+                                                </div>
+                                            </td>
+                                            <td width="80"
+                                                style="text-align:center;border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm">
+                                                <div>
+                                                    <span t-esc="line['price_tax']"/>
+
+                                                </div>
+                                            </td>
+                                            <td width="80"
+                                                style="text-align:center;border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm">
+                                                <div>
+                                                    <span style="font-weight: bold;"
+                                                          t-field="o.currency.symbol"/>
+                                                    <span t-esc="line['total']"/>
+
+                                                </div>
+                                            </td>
+                                            <t t-if="o.currency.name != 'AED'">
+                                                <td width="80"
+                                                    style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm">
+                                                    <div style="text-align:right;">
+                                                        AED
+                                                        <t t-esc="round(o.aed_currency*line['total'],2)"/>
+                                                    </div>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <table style="font-family: Arial; font-size: 14px;" width="100%" cellpadding="2"
+                               cellspacing="0">
+                            <tr valign="bottom" style="height: 2px;">
+                                <td width="40%"
+                                    style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0.1cm; padding-right: 0cm">
+                                    <p style="font-weight: bold;">
+                                    </p>
+                                </td>
+                                <td width="5%"
+                                    style="border-top: none; border-bottom: 1px solid #000000; border-left: none; border-right: none;padding-left: 0cm; padding-right: 0.1cm;">
+                                    <p>
+                                    </p>
+                                </td>
+                                <td width="19%"
+                                    style="border-top: none; border-bottom: 1px solid #000000; border-left: none; border-right: none;padding-left: 0cm; padding-right: 0.1cm;">
+                                    <p>
+                                    </p>
+                                </td>
+
+                                <t t-if="o.currency.name != 'AED'">
+                                    <td width="16%"
+                                        style="border-top: none; border-bottom: 1px solid #000000; border-left:none; border-right: none;padding-left: 0cm; padding-right: 0.1cm;">
+                                        <p style="font-weight: bold;">
+                                        </p>
+                                    </td>
+                                    <td width="18%"
+                                        style="border-top: none; border-bottom: 1px solid #000000; border-left:none; border-right: 1px solid #000000; padding-left: 0cm; padding-right: 0.1cm;">
+                                        <p style="text-align:right;  vertical-align: bottom">
+                                        </p>
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td width="16%"
+                                    style="border-top: none; border-bottom: 1px solid #000000; border-left:none; border-right: 1px solid #000000;padding-left: 0cm; padding-right: 0.1cm;">
+                                    <p style="font-weight: bold;">
+                                    </p>
+                                </td>
+                                </t>
+                            </tr>
+                            <tr valign="bottom" width="100%">
+                                <t t-if="o.currency.name != 'AED'">
+                                    <td width="40%"
+                                        style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0.1cm; padding-right: 0.1cm;">
+                                        <t t-set="aed_amount_total" t-value="o.amount_total*o.aed_currency"/>
+                                        <p style="font-weight: bold;">
+                                            Total: <span t-esc="o.currency.name"/>
+                                            <span t-esc="o.amount_to_textform(o.amount_total,o.currency)"/>
+                                            Only.
+                                            <br/>
+                                            <br/>
+                                            Total (AED):
+                                            <span t-esc="o.aed_amount_to_textform(aed_amount_total)"/>
+                                            Only.
+                                        </p>
+                                    </td>
+                                    <td width="5%"
+                                        style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0cm; padding-right: 0.1cm;">
+                                        <p>
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="19%"
+                                        style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0cm; padding-right: 0.1cm">
+                                        <p style="border-bottom:1px solid black;font-weight: bold;padding-left:0.2cm;padding-top:0.2cm;width:100%;">
+                                            <strong>Total Before VAT</strong>
+                                        </p>
+                                        <p style="border-bottom:1px solid black;font-weight: bold;padding-left:0.2cm;width:100%;">
+                                            <strong>VAT Incl.</strong>
+                                        </p>
+                                        <p style="border-bottom:1px solid black;font-weight: bold;padding-left:0.2cm;width:100%;">
+                                            <strong>Total</strong>
+                                        </p>
+                                    </td>
+                                    <td width="16%"
+                                        style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none;">
+
+                                        <p style="border-bottom:1px solid black;text-align:right; vertical-align: bottom;padding-right:0.2cm;padding-top:0.2cm;width:100%;">
+                                            <span style="font-weight: bold;"
+                                                  t-field="o.currency.symbol"/>
+                                            <span style="font-weight: bold;" t-field="o.amount_untaxed"/>
+                                        </p>
+                                        <p style="border-bottom:1px solid black;text-align:right;  vertical-align: bottom;padding-right:0.2cm;width:100%;">
+                                            <span style="font-weight: bold;" t-field="o.currency.symbol"/>
+                                            <span style="font-weight: bold;" t-field="o.amount_tax"/>
+                                        </p>
+                                        <p style="border-bottom:1px solid black;text-align:right;  vertical-align: bottom;padding-right:0.2cm;width:100%;">
+                                            <span style="font-weight: bold;" t-field="o.currency.symbol"/>
+                                            <span style="font-weight: bold;" t-field="o.amount_total"/>
+                                        </p>
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td width="40%"
+                                        style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0.1cm; padding-right: 0.1cm;">
+                                        <t t-set="aed_amount_total" t-value="o.amount_total*o.aed_currency"/>
+                                        <p style="font-weight: bold;">
+                                            Total: (AED)
+                                            <span t-esc="o.amount_to_textform(o.amount_total,o.currency)"/>
+                                            Only.
+                                            <br/>
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="5%"
+                                        style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0cm; padding-right: 0.1cm;">
+                                        <p>
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%"
+                                        style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-left: 0cm; padding-right: 0.1cm">
+                                        <p style="border-bottom:1px solid black;font-weight: bold;padding-left:0.2cm;padding-top:0.2cm;width:100%;">
+                                            <strong>Total Before VAT</strong>
+                                        </p>
+                                        <p style="border-bottom:1px solid black;font-weight: bold;padding-left:0.2cm;width:100%;">
+                                            <strong>VAT Incl.</strong>
+                                        </p>
+                                        <p style="border-bottom:1px solid black;font-weight: bold;padding-left:0.2cm;width:100%;">
+                                            <strong>Total</strong>
+                                        </p>
+
+                                    </td>
+                                    <td width="16%"
+                                        style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000;">
+
+                                        <p style="border-bottom:1px solid black;text-align:right; vertical-align: bottom;padding-right:0.2cm;padding-top:0.2cm;width:100%;">
+                                            <span style="font-weight: bold;"
+                                                  t-field="o.currency.symbol"/>
+                                            <span style="font-weight: bold;" t-field="o.amount_untaxed"/>
+                                        </p>
+                                        <p style="border-bottom:1px solid black;text-align:right;  vertical-align: bottom;padding-right:0.2cm;width:100%;">
+                                            <span style="font-weight: bold;" t-field="o.currency.symbol"/>
+                                            <span style="font-weight: bold;" t-field="o.amount_tax"/>
+                                        </p>
+                                        <p style="border-bottom:1px solid black;text-align:right;  vertical-align: bottom;padding-right:0.2cm;width:100%;">
+                                            <span style="font-weight: bold;" t-field="o.currency.symbol"/>
+                                            <span style="font-weight: bold;" t-field="o.amount_total"/>
+                                        </p>
+                                    </td>
+                                </t>
+
+                                <t t-if="o.currency.name != 'AED'">
+                                    <td width="18%"
+                                        style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-left: 0.1cm; padding-right: 0.1cm">
+                                        <p style="border-bottom:1px solid black;text-align:right;  vertical-align: bottom;padding-right:0.2cm;padding-top:0.2cm;width:100%;">
+                                            AED
+                                            <t style="font-weight: bold;"
+                                               t-esc="round(o.aed_currency*o.amount_untaxed,2)"/>
+                                        </p>
+                                        <p style="border-bottom:1px solid black;text-align:right;  vertical-align: bottom;padding-right:0.2cm;width:100%;">
+                                            AED
+                                            <t style="font-weight: bold;"
+                                               t-esc="round(o.aed_currency*o.amount_tax,2)"/>
+                                        </p>
+                                        <p style="border-bottom:1px solid black;text-align:right;  vertical-align: bottom;padding-right:0.2cm;width:100%;">
+                                            AED
+                                            <t style="font-weight: bold;"
+                                               t-esc="round(o.aed_currency*o.amount_total,2)"/>
+                                        </p>
+                                    </td>
+                                </t>
+                            </tr>
+                        </table>
+                        <p style="font-family: Arial;font-size:12px;">(Attached Approved Time Sheet and Copy of
+                                Purchase
+                                Order)
+                            </p>
+                        <table width="548" cellpadding="4" cellspacing="0"
+                               style="font-weight: bold;font-family: Verdana;font-size:14px;page-break-inside:avoid; border: none !important; border-collapse: separate !important; border-spacing: 0 !important;page-break-inside: avoid;padding-top: 25px">
+                            <tr valign="bottom">
+                                <td colspan="3">
+                                    <p style="font-weight: bold;font-family: Verdana;font-size:14px;;">
+                                        <u>Please make payment to our Bank Account as below:</u>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr valign="bottom">
+                                <td width="20%" style="border: none; padding: 0cm;">In Favour of
+                                </td>
+                                <td width="2%" style="border: none; padding: 0cm">:
+                                </td>
+                                <td width="55%" style="border: none; padding: 0cm">PRIME 4
+                                    INSPECTION LLC
+                                </td>
+                            </tr>
+                            <tr valign="bottom">
+                                <td width="20%" style="border: none; padding: 0cm">Bank
+                                </td>
+                                <td width="2%" style="border: none; padding: 0cm">:
+                                </td>
+                                <td width="55%" style="border: none; padding: 0cm">Abu Dhabi
+                                    Commercial Bank,Dubai, UAE
+                                </td>
+                            </tr>
+                            <tr valign="bottom">
+                                <td width="20%" style="border: none; padding: 0cm">A/C No.
+                                </td>
+                                <td width="2%" style="border: none; padding: 0cm">:
+                                </td>
+                                <td width="55%" style="border: none; padding: 0cm">372053920001
+                                </td>
+                            </tr>
+                            <tr valign="bottom">
+                                <td width="20%" style="border: none; padding: 0cm">SWIFT
+                                </td>
+                                <td width="2%" style="border: none; padding: 0cm">:
+                                </td>
+                                <td width="55%" style="border: none; padding: 0cm">ADCBAEAA
+                                </td>
+
+                            </tr>
+                            <tr valign="bottom">
+                                <td width="20%" style="border: none; padding: 0cm">IBAN
+                                </td>
+                                <td width="2%" style="border: none; padding: 0cm">:
+                                </td>
+                                <td width="55%" style="border: none; padding: 0cm">AE220030000372053920001
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table table-condensed" width="100%" cellpadding="4" cellspacing="0"
+                               style="font-weight: bold;font-family: Arial;font-size:14px; border: none !important; border-collapse: separate !important; border-spacing: 0 !important;page-break-inside: avoid;padding-top: 25px">
+                            <tr>
+                                <td width="60%" style="border: none; padding: 0cm">
+                                    <p>For PRIME 4 INSPECTION LLC</p>
+                                    <t t-if="o.client_id.sign_image">
+                                        <img t-att-src="image_data_uri(o.client_id.sign_image)" height="40"
+                                             width="110"/>
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="o.client_id.stamp_image">
+                                        <img t-att-src="image_data_uri(o.client_id.stamp_image)" align="left"
+                                             height="40" width="80%"/>
+                                    </t>
+                                </td>
+                            </tr>
+                        </table>
+                    </t>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

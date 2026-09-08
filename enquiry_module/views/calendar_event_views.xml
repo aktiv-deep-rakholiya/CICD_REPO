@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="calender_event_view_order_form" model="ir.ui.view">
+            <field name="name">Calender Event</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="project_management.calendar_event_edit_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button class="oe_highlight" string="Approve" type="object" name="approve_statusbar1"
+                                groups="base.group_system,project_management.group_enquiry_ceo,project_management.group_p4_manager"
+                                invisible="event_status != 'submitforapproval'"/>
+                        <button class="oe_highlight" string="Submit" type="object" name="action_submit"
+                                groups="base.group_system,project_management.group_enquiry_coordinator" invisible="1"/>
+                        <field name="event_status" widget="statusbar"
+                               statusbar_visible="createcalanderevent,submitforapproval,approved,submit"
+                               groups="base.group_system,project_management.group_enquiry_coordinator,project_management.group_p4_coordinator"
+                               invisible="event_status in ['approved']"/>
+                        <field name="event_state" widget="statusbar"
+                               groups="base.group_system,project_management.group_p4_manager,project_management.group_enquiry_ceo"
+                               invisible="status in ['open','review','verified','submit','edit']"/>
+                        <field name="status" widget="statusbar" statusbar_visible="open,review,submit,verified"
+                               invisible="event_status != 'approved'"/>
+                        <button name="button_submit" string="Submit for Review" type="object"
+                               invisible="event_status != 'approved' or status != 'open'"
+                                class="oe_highlight"
+                                groups="base.group_system,project_management.group_p4_coordinator"/>
+                        <button name="button_verify" string="Submit For Approval" type="object"
+                                groups="base.group_system,project_management.group_p4_reviewer,project_management.group_p4_manager" class="oe_highlight"
+                                invisible="status not in ['review']"/>
+                        <button name="action_edit" string="Edit" type="object"
+                                groups="base.group_system,project_management.group_p4_coordinator"
+                                invisible="status not in ['verified']"
+                                class="oe_highlight"/>
+                        <button name="button_approve_ins" type="object" string="ReSubmit"
+                                groups="base.group_system,project_management.group_p4_coordinator" class="oe_highlight"
+                                invisible="status not in ['edit']"/>
+                        <button name="button_approve" type="object" string="Approve"
+                                groups="base.group_system,project_management.group_p4_manager" class="oe_highlight"
+                                invisible="status != 'submit'"/>
+                        <button name="button_reject" type="object" string="Reject" class="oe_highlight"
+                                groups="base.group_system,project_management.group_p4_manager"
+                                invisible="status != 'submit'"/>
+                    </header>
+                </xpath>
+                <xpath expr="//field[@name='inspection_coordinator']" position="before">
+                    <field name="unique_no" domain="['|',('is_calendar_event_created','=', False),('status','=', 'won')]"
+                           readonly="status in ['review', 'submit', 'verified']" options="{'no_create': True, 'no_create_edit':True}" invisible="1"/>
+                    <field name="client_id" readonly="event_status == 'submitforapproval' or status in ['review', 'submit','verified']" required="1"/>
+                </xpath>
+                <xpath expr="//button[@name='action_open_calendar_event']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <field name="privacy" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="show_as" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <xpath expr="//field[@name='unique_no']" position="after">
+                    <field name="serial_no" invisible ="1" readonly="1" force_save="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_ids']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='inspection_coordinator']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_open': True}</attribute>
+                    <attribute name="groups">project_management.group_enquiry_coordinator,project_management.group_p4_coordinator,base.group_system,project_management.group_enquiry_ceo</attribute>
+                    <attribute name="readonly">status in ['review', 'submit', 'verified']</attribute>
+                </xpath>
+                <xpath expr="//field[@name='v_location']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_open': True}</attribute>
+                    <attribute name="readonly">status in ['review', 'submit', 'verified']</attribute>
+                </xpath>
+                <xpath expr="//field[@name='eigl_person_id']" position="attributes">
+                    <attribute name="readonly">status in ['review', 'submit', 'verified']</attribute>
+                </xpath>
+                <xpath expr="//field[@name='project_id']" position="attributes">
+                    <attribute name="readonly">status in ['review', 'submit', 'verified']</attribute>
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='purchase_id']" position="attributes">
+                    <attribute name="domain">[('is_service_agreement', '=', False)]</attribute>
+                    <attribute name="readonly">status in ['review', 'submit', 'verified']</attribute>
+                    <attribute name="context">{'form_view_ref': 'enquiry_module.view_purchase_order_minimal_form'}</attribute>
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='sub_vendor']" position="attributes">
+                    <attribute name="readonly">status in ['review', 'submit', 'verified']</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='description']" position="attributes">
+                    <attribute name="readonly">status in ['review', 'submit', 'verified']</attribute>
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='vendor_id']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_open': True}</attribute>
+                    <attribute name="domain">['|',('supplier_rank','>',0),('customer_rank', '>', 0)]</attribute>
+                </xpath>
+                <xpath expr="//field[@name='start_date']" position="after">
+                    <field name="purchase_date" invisible="1"/>
+                    <field name="total_days"  required="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='event_tz']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <field name="employee" position="before">
+                    <field name="date" string="Calendar Date" readonly="1" invisible="1" force_save="1"/>
+                </field>
+
+                <field name="alarm_ids" position="before">
+                    <field name="code" invisible="1"/>
+                    <field name="tax_id" string="Tax" widget="many2many_tags" invisible="1"/>
+                    <field name="jar_email"
+                        readonly="event_status == 'submitforapproval' or status in ['review', 'submit','verified']"/>
+                    <field name="jar_email_date"
+                        readonly="event_status == 'submitforapproval' or status in ['review', 'submit','verified']"/>
+                    <field name="jar" invisible="1"
+                        readonly="event_status == 'submitforapproval' or email"/>
+                    <field name="email" invisible="1"/>
+                    <field name="resource_type" readonly="event_status == 'submitforapproval' or status in ['review', 'submit','verified']" invisible="1"/>
+                    <field name="rate_list" widget="radio" readonly="event_status == 'submitforapproval' or status in ['review', 'submit','verified']" invisible="1"/>
+                    <field name="add_day_travel"
+                        readonly="event_status == 'submitforapproval' or status in ['review', 'submit','verified']"/>
+                    <label for="add_expenses_rtpcr"/>
+                    <div class="d-flex">
+                        <field name="add_expenses_rtpcr"
+                            readonly="event_status == 'submitforapproval' or status in ['review', 'submit','verified']"
+                            force_save="1"/>
+                        <field name="add_expenses_rtpcr1"
+                            invisible="not add_expenses_rtpcr" readonly="event_status == 'submitforapproval' or status in ['review', 'submit','verified']"
+                            groups="base.group_system,project_management.group_p4_coordinator"/>
+                    </div>
+                    <label for="add_expenses_airfare"/>
+                    <div class="d-flex">
+                        <field name="add_expenses_airfare" force_save="1"
+                            readonly="event_status == 'submitforapproval' or status in ['review', 'submit','verified']"/>
+                        <field name="add_expenses_airfare1"
+                            invisible="not add_expenses_airfare" readonly="event_status == 'submitforapproval' or status in ['review', 'submit','verified']"
+                            groups="base.group_system,project_management.group_p4_coordinator"/>
+                    </div>
+                    <label for="add_expenses_mileage"/>
+                    <div class="d-flex">
+                        <div>
+                            <field name="add_expenses_mileage" force_save="1"
+                                readonly="event_status == 'submitforapproval' or status in ['review', 'submit','verified']"/>
+                        </div>
+                        <div class="col-1">
+                            <field name="km" readonly="1" force_save="1"
+                                invisible="not add_expenses_mileage"
+                                groups="base.group_system,project_management.group_p4_coordinator"/>
+                        </div>
+                        <div class="col-3">
+                            <field name="add_km_mileage1"
+                                invisible="not add_expenses_mileage" readonly="event_status == 'submitforapproval' or status in ['review', 'submit','verified']"
+                                groups="base.group_system,project_management.group_p4_coordinator"/>
+                        </div>
+                        <div class="col-1">
+                            <field name="currency_id" readonly="1" force_save="1"
+                                invisible="not add_expenses_mileage"
+                                groups="base.group_system,project_management.group_p4_coordinator"/>
+                        </div>
+                        <div class="col-3">
+                            <field name="add_expenses_mileage1" readonly="1" force_save="1"
+                                invisible="not add_expenses_mileage"
+                                groups="base.group_system,project_management.group_p4_coordinator"/>
+                        </div>
+                    </div>
+
+                    <label for="street_page_lead" string="Address" invisible="1"/>
+                    <div class="o_address_format">
+                        <field name="street" id="street_page_lead" placeholder="Street..." class="o_address_street"
+                               readonly="1" force_save="1" invisible="1"/>
+                        <field name="street2" placeholder="Street 2..." class="o_address_street" readonly="1"
+                               force_save="1" invisible="1"/>
+                        <field name="city" placeholder="City" class="o_address_city" readonly="1" force_save="1"
+                               invisible="1"/>
+                        <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'
+                               readonly="1" force_save="1" invisible="1"/>
+                        <field name="zip" placeholder="ZIP" class="o_address_zip" readonly="1" force_save="1"
+                               invisible="1"/>
+                        <field name="country_id" placeholder="Country" class="o_address_country"
+                               options='{"no_open": True, "no_create": True}' readonly="1" force_save="1"
+                               invisible="1"/>
+                    </div>
+
+                    <field name="price_list" string="Price List" readonly="1" force_save="1" invisible="1"/>
+                    <field name="pay_term" string="Payment Term" readonly="1" force_save="1" invisible="1"/>
+                    <field name="currency" string="Currency" readonly="1" force_save="1" invisible="1"/>
+                    <field name="vat_code" string="Vat Code" invisible="1"/>
+                    <field name="tel_num" string="Tel Num" invisible="1"/>
+                    <field name="fax" string="Fax" invisible="1"/>
+                    <field name="attn" string="Attn" invisible="1"/>
+                    <field name="trn" string="TRN" invisible="1"/>
+
+                </field>
+
+            </field>
+        </record>
+
+        <record id="calendar_event_record" model="ir.actions.act_window">
+            <field name="name">calendar view</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">calendar.event</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="calender_event_view_order_form"/>
+        </record>
+
+        <record id="calendar.action_calendar_event" model="ir.actions.act_window">
+            <field name="context">{'search_default_unique_no': 1}</field>
+        </record>
+
+        <record id="project_management.action_p4_timesheet_summary" model="ir.actions.act_window">
+            <field name="context">{'search_default_unique_no': 1}</field>
+        </record>
+
+        <record id="calendar_event_edit_view_default_order" model="ir.ui.view">
+            <field name="name">tree.calendar.event.edit.tree</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_tree"/>
+            <field name="arch" type="xml">
+                  <xpath expr="//list" position="attributes">
+                      <attribute name="default_order">unique_no desc</attribute>
+                  </xpath>
+            </field>
+        </record>
+
+        <record id="p4_timesheet_summary_default_order" model="ir.ui.view">
+            <field name="name">tree.calendar.event.edit.tree</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="project_management.p4_timesheet_summary"/>
+            <field name="arch" type="xml">
+                  <xpath expr="//list" position="attributes">
+                      <attribute name="default_order">unique_no desc</attribute>
+                  </xpath>
+            </field>
+        </record>
+
+    </data>
+
+</odoo>
+

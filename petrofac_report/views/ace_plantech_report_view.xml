@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ace_plantech_summary_report_view" model="ir.ui.view">
+        <field name="name">ACE Palntech Timesheet Report</field>
+        <field name="model">ace.plantech.summary.report</field>
+        <field name="inherit_id" ref="project_management.view_common_report"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='project_id']" position="after">
+                <field name="service_no" widget="many2many_tags" options="{'no_create': True, 'no_open': True}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_ace_plantech_summary_report_menu" model="ir.actions.act_window">
+        <field name="name">ACE Plantech Timesheet Report</field>
+        <field name="res_model">ace.plantech.summary.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="ace_plantech_summary_report_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_ace_plantech_report" name="ACE Plantech" action="action_ace_plantech_summary_report_menu" parent="prime4_report.menu_timesheet_summary_report_main" sequence="8"/>
+
+</odoo>

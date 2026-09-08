@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_eneico_summary_report_menu" model="ir.actions.act_window">
+        <field name="name">Eneico Timesheet Report</field>
+        <field name="res_model">eneico.summary.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="project_management.view_common_report"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_eneico_report" name="Eneico" action="action_eneico_summary_report_menu" parent="prime4_report.menu_timesheet_summary_report_main" sequence="10"/>
+
+</odoo>
