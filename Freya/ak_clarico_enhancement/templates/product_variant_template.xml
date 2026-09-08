@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--  This template extends `website_sale.product_variants` to modify how-->
+    <!--variant selectors are rendered on the product page.-->
+    <template id="product_variants_inherits_by_fp" inherit_id="website_sale.product_variants">
+        <!--  After the definition of `filtered_sorted_variants`, it introduces a-->
+        <!--   new QWeb variable `is_attributes`, containing the number of attribute-->
+        <!--   values attached to the product. This is computed as the length of-->
+        <!--   `product.attribute_line_ids.mapped('value_ids')`.-->
+        <xpath expr="//t[@t-set='filtered_sorted_variants']" position="after">
+            <t t-set="is_attributes" t-value="len(product.attribute_line_ids.mapped('value_ids'))"/>
+        </xpath>
+        <!--  It then overrides the condition on the variant selector block. The-->
+        <!--   original logic checks whether more than one filtered variant exists.-->
+        <!--   This template replaces that condition with a simpler one:-->
+        <!--   the block is shown only if `is_attributes > 0`, meaning the product-->
+        <!--   must have at least one attribute value to display the selector.-->
+        <xpath expr="//t[@t-if='not product.has_dynamic_attributes() and not product._has_no_variant_attributes() and not product._has_is_custom_values()']//t[@t-if='len(filtered_sorted_variants) &gt; 1']"
+               position="attributes">
+            <attribute name="t-if">is_attributes &gt; 0</attribute>
+        </xpath>
+    </template>
+</odoo>
